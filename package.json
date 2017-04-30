@@ -1,0 +1,30 @@
+{
+  "name": "evagokhale",
+  "version": "1.0.0",
+  "description": "My daughters website.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nileshgokhalepune/evagokhale.git"
+  },
+  "keywords": [
+    "eva",
+    "gokhale",
+    "baby",
+    "daughter"
+  ],
+  "author": "Nilesh Gokhale",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nileshgokhalepune/evagokhale/issues"
+  },
+  "homepage": "https://github.com/nileshgokhalepune/evagokhale#readme",
+  "dependencies": {
+    "express": "4.15.2",
+    "mongoose": "4.9.6",
+    "path": "0.12.7"
+  }
+}
