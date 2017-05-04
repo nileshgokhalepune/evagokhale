@@ -4,6 +4,8 @@ var path = require('path');
 var debug = require('debug');
 var bodyParser = require('body-parser');
 
+var app = express();
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
