@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var path = require('path');
 var debug = require('debug');
 var bodyParser = require('body-parser');
-
+var config = require('./libraries/config');
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -17,11 +17,11 @@ app.use(bodyParser.urlencoded({
 
 app.use(express.static(path.join(__dirname, 'client')));
 
-mongoose.connect(config.dbUrl);
+mongoose.connect(config.dburl);
 
 var db = mongoose.connection;
 
-db.on('error', console.error('connection error'));
+db.on('error', console.error.bind('connection error'));
 
 db.once('open', function() {
   console.log('connected');
