@@ -4,6 +4,7 @@ var path = require('path');
 var debug = require('debug');
 var bodyParser = require('body-parser');
 var config = require('./libraries/config');
+var indexRoutes = require('./routes/index');
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -16,7 +17,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(express.static(path.join(__dirname, 'client')));
-
+app.use('/', indexRoutes);
 mongoose.connect(config.dburl);
 
 var db = mongoose.connection;
