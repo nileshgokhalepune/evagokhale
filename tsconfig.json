@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "rootDir": "./client",
         "module": "commonjs",
         "moduleResolution": "node",
         "experimentalDecorators": true,

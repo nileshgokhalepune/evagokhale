@@ -42,5 +42,8 @@
     "reflect-metadata": "0.1.10",
     "request": "2.81.0",
     "dropbox": "2.5.4"
+  },
+  "devDependencies": {
+    "typescript": "2.3.3"
   }
 }
