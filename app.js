@@ -17,9 +17,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(express.static(path.join(__dirname, 'client')));
-app.use('/', indexRoutes);
-mongoose.connect(config.dburl);
 
+app.use('/', indexRoutes);
+
+mongoose.connect(config.dburl);
 var db = mongoose.connection;
 
 db.on('error', console.error.bind('connection error'));
