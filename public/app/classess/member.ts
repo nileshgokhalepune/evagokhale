@@ -1,6 +1,6 @@
 export class member {
-    id: string;
+    id: number;
     name: string;
-    dateOfBirth: Date;
+    dateOfBirth?: Date;
     relation: string;
 }

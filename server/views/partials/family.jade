@@ -1,9 +1,10 @@
 div This is a family Component that will hold all immediate family data for the user.
     div Load Mother
     div Load Father
-    div 
-        member([name]="name")
-    div Load Spouse
+    div Self
+        member([name]="self" #self)
+    div Spouse
+        member([name]="spouse" #spouse)
     div Load Children
     div load Siblings
     div load Friends

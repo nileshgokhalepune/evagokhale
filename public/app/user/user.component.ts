@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-
+import { member } from '../classess/member';
 @Component({
     selector: 'login',
     templateUrl: 'partials/login'
@@ -15,10 +15,17 @@ export class LoginComponent {
 export class MmmberArea implements OnInit {
     @Input('user') user: any;
     private currentUser: any;
+    private memberArray: Array<member>;
+    private self: MemberComponent;
+    private spouse: MemberComponent;
+
     ngOnInit() {
         if (this.user) {
             //get hirerchihal data of the user
             this.currentUser = jsonobject;
+            this.memberArray = new Array<member>();
+            this.self.detail = { id: 1, name: this.currentUser.name, relation: this.currentUser.relation };
+            this.spouse.detail = { id: 1, name: this.currentUser.spouse ? this.currentUser.spouse.name : '', relation: 'spuse' };
         }
     }
 }
@@ -30,8 +37,9 @@ export class MmmberArea implements OnInit {
     `
 })
 export class MemberComponent {
-    @Input('name') name: any;
+    @Input('name') detail: member;
 }
+
 var jsonobject = {
     self: 'Eva',
     name: 'Eva',
