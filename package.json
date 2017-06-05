@@ -5,7 +5,7 @@
   "main": "./server/server.js",
   "scripts": {
     "prepublish": "tsc",
-    "start": "node ./bin/www",
+    "start": "tsc && node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp"
   },
