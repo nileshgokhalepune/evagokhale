@@ -1,0 +1,10 @@
+label{
+    font-weight: bold;
+    font-family: sans-serif
+}
+
+input[type=text]{
+    display: block;
+    margin:4px;
+    padding: 3px;
+}

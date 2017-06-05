@@ -4,13 +4,15 @@ html
     base(href="/")
     meta(name="viewport",content="width=device-width, initial-scale=1.0")
     title= title
-    script(src="node_modules/es6-shim/es6-shim.js")
-    script(src="node_modules/systemjs/dist/system-polyfills.src.js")
-    script(src="node_modules/es6-promise/dist/es6-promise.js")
-    script(src="node_modules/core-js/client/shim.min.js")
-    script(src="node_modules/reflect-metadata/Reflect.js")
-    script(src="node_modules/systemjs/dist/system.src.js")
-    script(src="node_modules/zone.js/dist/zone.js")
-        script System.import('app').catch(function (err) {console.error(err); });
+    script(src="/es6-shim/es6-shim.js")
+    script(src="/es6-promise/dist/es6-promise.js")
+    script(src="/core-js/client/shim.min.js")
+    script(src="/reflect-metadata/Reflect.js")
+    script(src="/systemjs/dist/system.src.js")
+    script(src="/zone.js/dist/zone.js")
+    link(href="/assets/style.css")
+    <!-- 2. Configure SystemJS -->
+    script(src="/systemjs.config.js")
+    script System.import('app').catch(function (err) {console.error(err); });
   body(class="container-fluid")
     block content
