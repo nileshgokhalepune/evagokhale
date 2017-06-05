@@ -4,8 +4,9 @@
   "description": "",
   "main": "./server/server.js",
   "scripts": {
-    "start": "\"node ./bin/wwww \"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "build && \"node ./bin/wwww \"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp"
   },
   "repository": {
     "type": "git",
@@ -43,6 +44,7 @@
     "@angular/http": "4.1.3",
     "@angular/compiler": "4.1.3",
     "es6-shim": "0.35.3",
-    "es6-promise": "4.1.0"
+    "es6-promise": "4.1.0",
+    "gulp": "3.9.1"
   }
 }
