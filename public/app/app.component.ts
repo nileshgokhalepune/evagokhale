@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { StartupService } from './services/startup.service';
-import { LoginComponent } from './user/user.component';
+
 @Component({
     selector: 'app',
     template: `
         <div>
             Start here
-            <memberarea *ngif="isLoggedin" [user]="user"></memberarea>
+            <family *ngIf="isLoggedin" [user]="user"></family>
             <login *ngIf="!isLoggedin">
             </login>
         </div>
