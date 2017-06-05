@@ -4,7 +4,8 @@
   "description": "",
   "main": "./server/server.js",
   "scripts": {
-    "start": "tsc && node ./bin/wwww ",
+    "prepublish": "tsc",
+    "start": "\"node bin/wwww \"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp"
   },
