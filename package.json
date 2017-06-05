@@ -1,0 +1,34 @@
+{
+  "name": "evagokhale",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./server/server.js",
+  "scripts": {
+    "start": "node ./server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nileshgokhalepune/evagokhale.git"
+  },
+  "keywords": [
+    "familytree",
+    "family",
+    "eva"
+  ],
+  "author": "Nilesh Gokhale",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nileshgokhalepune/evagokhale/issues"
+  },
+  "homepage": "https://github.com/nileshgokhalepune/evagokhale#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "debug": "^2.6.8",
+    "express": "^4.15.3",
+    "jade": "^1.11.0",
+    "mongoose": "^4.10.4",
+    "path": "^0.12.7",
+    "request": "^2.81.0"
+  }
+}
