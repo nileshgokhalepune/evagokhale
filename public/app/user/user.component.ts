@@ -23,6 +23,15 @@ export class MmmberArea implements OnInit {
     }
 }
 
+@Component({
+    selector: 'member',
+    template: `
+        <div>{{name}}</div>
+    `
+})
+export class MemberComponent {
+    @Input('name') name: any;
+}
 var jsonobject = {
     self: 'Eva',
     name: 'Eva',
