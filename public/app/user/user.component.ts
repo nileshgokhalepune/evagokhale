@@ -10,7 +10,11 @@ export class LoginComponent {
 
 @Component({
     selector: 'family',
-    templateUrl: 'partials/family'
+    templateUrl:`
+        <member #self [name]="self"></member>
+        <member #spouse [name]="spouse"></member>
+    `
+    /*'partials/family'*/
 })
 export class MmmberArea implements OnInit {
     @Input('user') user: any;
@@ -25,7 +29,7 @@ export class MmmberArea implements OnInit {
             this.currentUser = jsonobject;
             this.memberArray = new Array<member>();
             this.self.detail = { id: 1, name: this.currentUser.name, relation: this.currentUser.relation };
-            this.spouse.detail = { id: 1, name: this.currentUser.spouse ? this.currentUser.spouse.name : '', relation: 'spuse' };
+            this.spouse.detail = { id: 1, name: this.currentUser.spouse ? this.currentUser.spouse.name : '', relation: 'spouse' };
         }
     }
 }
