@@ -12,6 +12,9 @@ export function init(startUp: StartupService) {
     imports: [
         BrowserModule
     ],
+    entryComponents: [
+        MemberComponent
+    ],
     declarations: [
         AppComponent,
         LoginComponent,

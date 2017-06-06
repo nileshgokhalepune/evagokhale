@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, AfterViewInit } from '@angular/core';
 import { member } from '../classess/member';
 @Component({
     selector: 'login',
@@ -10,26 +10,76 @@ export class LoginComponent {
 
 @Component({
     selector: 'family',
-    templateUrl:`
-        <member #self [name]="self"></member>
-        <member #spouse [name]="spouse"></member>
+    template: `
+        <ng-template #dynamicInsert></ng-template>
     `
-    /*'partials/family'*/
+    //templateUrl: 'partials/family'
 })
-export class MmmberArea implements OnInit {
+export class MmmberArea implements OnInit, AfterViewInit {
     @Input('user') user: any;
-    private currentUser: any;
+    private currentUser: member;
     private memberArray: Array<member>;
-    private self: MemberComponent;
-    private spouse: MemberComponent;
+    private selfDetail: member;
+    private spouseDetail: member;
+    private motherDetail: member;
+    private fatherDetail: member;
+    @ViewChild('dynamicInsert', { read: ViewContainerRef }) dynamicInsert: ViewContainerRef;
+
+    constructor(private viewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
+
+    }
 
     ngOnInit() {
         if (this.user) {
             //get hirerchihal data of the user
-            this.currentUser = jsonobject;
-            this.memberArray = new Array<member>();
-            this.self.detail = { id: 1, name: this.currentUser.name, relation: this.currentUser.relation };
-            this.spouse.detail = { id: 1, name: this.currentUser.spouse ? this.currentUser.spouse.name : '', relation: 'spouse' };
+            this.currentUser = <member>jsonobject;
+            // this.memberArray = new Array<member>();
+            // this.selfDetail = { id: 1, name: this.currentUser.name, relation: this.currentUser.relation };
+            // this.spouseDetail = this.currentUser.spouse ? { id: 1, name: this.currentUser.spouse.name, relation: 'spouse' } : null;
+            // if (this.currentUser.parents.length > 0) {
+            //     this.currentUser.parents.forEach(data => {
+            //         if (data.relation === 'Mother') this.motherDetail = data;
+            //         if (data.relation === 'Father') this.fatherDetail = data
+            //     });
+            // }
+        }
+    }
+
+    ngAfterViewInit() {
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(MemberComponent);
+        this.dynamicInsert.clear();
+
+        if (this.currentUser.parents.length > 0) {
+            this.currentUser.parents.forEach(element => {
+                var parentComponent = this.dynamicInsert.createComponent(componentFactory);
+                var parent = parentComponent.instance;
+                parent.relation = element.relation;
+                parent.detail = element;
+            });
+        }
+        const self = <MemberComponent>this.dynamicInsert.createComponent(componentFactory).instance;
+        self.detail = { id: 1, name: this.currentUser.name, relation: this.currentUser.relation };
+        self.relation = self.detail.relation;
+        if (this.currentUser.spouse) {
+            const spouse = <MemberComponent>this.dynamicInsert.createComponent(componentFactory).instance;
+            spouse.detail = this.currentUser.spouse ? { id: 1, name: this.currentUser.spouse.name, relation: 'spouse' } : null;
+            spouse.relation = spouse.detail.relation;
+        }
+        if (this.currentUser.friends && this.currentUser.friends.length > 0) {
+            //render friends
+            this.currentUser.friends.forEach(element => {
+                const frnd = this.dynamicInsert.createComponent(componentFactory).instance;
+                frnd.detail = element;
+                frnd.relation = element.relation;
+            });
+        }
+        if (this.currentUser.siblings && this.currentUser.siblings.length > 0) {
+            this.currentUser.siblings.forEach(element => {
+                const frnd = this.dynamicInsert.createComponent(componentFactory).instance;
+                frnd.detail = element;
+                frnd.relation = element.relation;
+            });
+
         }
     }
 }
@@ -37,15 +87,19 @@ export class MmmberArea implements OnInit {
 @Component({
     selector: 'member',
     template: `
-        <div>{{name}}</div>
+        <div class="hex" [attr.relation]="relation">
+            <span>
+                {{detail ? detail.name : "Data not provided"}}
+            </span>
+        </div>
     `
 })
 export class MemberComponent {
-    @Input('name') detail: member;
+    @Input('detail') detail: member;
+    @Input('relation') relation: string;
 }
 
 var jsonobject = {
-    self: 'Eva',
     name: 'Eva',
     relation: 'self',
     parents: [
@@ -64,7 +118,7 @@ var jsonobject = {
             name: 'Rishabh'
         }
     ],
-    spouse: {},
-    childre: [],
-    friedns: []
+    spouse: null,
+    childre: null,
+    friedns: null
 }

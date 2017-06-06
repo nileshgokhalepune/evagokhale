@@ -8,3 +8,68 @@ input[type=text]{
     margin:4px;
     padding: 3px;
 }
+
+#self {
+    border: 1px solid blue;
+    border-radius: 20px;
+    width: 50px;
+}
+
+.hexagon{
+    width:0;
+    border-top:30px solid #c66;
+    border-bottom:30px solid #c6c;
+    border-left:52px solid transparent;
+    border-right:52px solid transparent;
+    margin: 10px;
+}
+
+.hex:before {
+    content: " ";
+    width: 0; height: 0;
+    border-bottom: 30px solid silver;
+    border-left: 52px solid transparent;
+    border-right: 52px solid transparent;
+    position: absolute;
+    top: -30px;
+}
+
+.hex {
+    margin-top: 30px;
+    width: 104px;
+    height: 60px;
+    background-color: silver;
+    position: relative;
+    margin: 100px;
+}
+
+.hex:after {
+    content: "";
+    width: 0;
+    position: absolute;
+    bottom: -30px;
+    border-top: 30px solid silver;
+    border-left: 52px solid transparent;
+    border-right: 52px solid transparent;
+    left: 0;
+}
+
+[relation="Mother"]{
+    left:100px;
+    top:100px;
+    background-color: blue;
+}
+
+[relation="Mother"]{
+    right:100px;
+    top:100px;
+    position: relative;
+    background-color: red;
+}
+
+[relation="Self"]{
+    top:50%;
+    left:50%;
+    position: relative;
+    background-color: green;
+}
