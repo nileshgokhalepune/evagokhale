@@ -8,4 +8,6 @@ export class member {
     friends?:Array<member>;
     children?:Array<member>;
     siblings?:Array<member>;
+    placeInHirerchy?:number;
+    cousins?:Array<member>;
 }
