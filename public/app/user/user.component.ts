@@ -140,20 +140,20 @@ var jsonobject = {
         {
             relation: 'Mother',
             placeInHirerchy: 1,
-            name: 'M',
+            name: 'Priti',
             id: 2
         },
         {
             relation: 'Father',
             placeInHirerchy: 1,
-            name: 'F',
+            name: 'Nilesh',
             id: 3
         }
     ],
     siblings: [
         {
             relation: 'Step brother',
-            name: 'SB',
+            name: 'Rishabh',
             placeInHirerchy: 2,
             id: 4
         }
@@ -162,13 +162,13 @@ var jsonobject = {
     children: null,
     cousins: [{
         relation: 'Cousin',
-        name: 'C',
+        name: 'Arjun',
         placeInHirerchy: 2,
         id: 6
     },
     {
         relation: 'Cousin',
-        name: 'C',
+        name: 'Janaki',
         id: 7
     }],
     friends: []
