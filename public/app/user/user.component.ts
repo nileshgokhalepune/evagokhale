@@ -102,7 +102,7 @@ export class MmmberArea implements OnInit, AfterViewInit {
 @Component({
     selector: 'member',
     template: `
-        <div [attr.relation]="relation">
+        <div [attr.relation]="relation" [attr.title]="relation">
             <div class="hex">
                 <div class="top"></div>
                 <div class="middle">{{detail.name}}</div>
