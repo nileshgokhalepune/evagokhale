@@ -1,36 +1,33 @@
 import { Component, Input, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, AfterViewInit, Directive, ElementRef } from '@angular/core';
 import { member } from '../classess/member';
-@Component({
-    selector: 'login',
-    templateUrl: 'partials/login'
-})
-export class LoginComponent {
-
-}
 
 @Component({
     selector: 'family',
     template: `
         <div class="family-container">
-            <div class="collection">
+            <div class="collection parents">
                 <ng-template #parents></ng-template>
             </div>
-            <ng-template #spouse></ng-template>
-            <div class="collection">
+            <div class="spouse">
+                <ng-template #spouse></ng-template>
+            </div>
+            <div class="collection siblings">
                 <ng-template #siblings></ng-template>
             </div>
-            <div class="collection">
+            <div class="collection children">
                 <ng-template #children></ng-template>
             </div>
-            <div class="collection">
+            <div class="collection friends">
                 <ng-template #friends></ng-template>            
             </div>
-            <ng-template #self></ng-template>
+            <div class="self">
+                <ng-template #self></ng-template>
+            </div>
         </div>
     `
     //templateUrl: 'partials/family'
 })
-export class MmmberArea implements OnInit, AfterViewInit {
+export class FamilyComponent implements OnInit, AfterViewInit {
     @Input('user') user: any;
     private currentUser: member;
     private memberArray: Array<member>;
