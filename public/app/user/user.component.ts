@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, AfterViewInit, Directive, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, AfterViewInit, Directive, ElementRef, Output, EventEmitter } from '@angular/core';
 import { member } from '../classess/member';
 
 @Component({
@@ -41,6 +41,7 @@ export class FamilyComponent implements OnInit, AfterViewInit {
     @ViewChild('children', { read: ViewContainerRef }) children: ViewContainerRef;
     @ViewChild('friends', { read: ViewContainerRef }) friends: ViewContainerRef;
     @ViewChild('self', { read: ViewContainerRef }) self: ViewContainerRef;
+    @Output('childClicked') childClicked: EventEmitter<string> = new EventEmitter<string>();
 
     constructor(private viewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
 
@@ -71,6 +72,7 @@ export class FamilyComponent implements OnInit, AfterViewInit {
         }
         const self = <MemberComponent>this.self.createComponent(componentFactory).instance;
         self.detail = { id: 1, name: this.currentUser.name, relation: this.currentUser.relation };
+        self.clicked = this.clicked;
         self.relation = self.detail.relation;
         if (this.currentUser.spouse) {
             const spouse = <MemberComponent>this.spouse.createComponent(componentFactory).instance;
@@ -93,12 +95,16 @@ export class FamilyComponent implements OnInit, AfterViewInit {
             });
         }
     }
+
+    private clicked(value: string) {
+
+    }
 }
 
 @Component({
     selector: 'member',
     template: `
-        <div [attr.relation]="relation" [attr.title]="relation" [ngStyle]="style">
+        <div [attr.relation]="relation" [attr.title]="relation" [ngStyle]="style" (click)="clickedMe()">
             <div class="hex">
                 <div class="top"></div>
                 <div class="middle">{{detail.name}}</div>
@@ -110,6 +116,8 @@ export class FamilyComponent implements OnInit, AfterViewInit {
 export class MemberComponent implements AfterViewInit {
     @Input('detail') detail: member;
     @Input('relation') relation: string;
+    @Output('clicked') clicked: EventEmitter<string> = new EventEmitter<string>();
+
     private style: any = {};
     private styleFactory: StyleFactory;
 
@@ -120,6 +128,10 @@ export class MemberComponent implements AfterViewInit {
     ngAfterViewInit() {
         if (this.detail)
             this.style = this.styleFactory.getStyle(this.detail.relation);
+    }
+
+    private clickedMe() {
+        this.clicked.emit(this.detail.name);
     }
 }
 
