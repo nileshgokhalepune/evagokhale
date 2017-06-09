@@ -58,25 +58,37 @@ input[type=text]{
     bottom: 0;
 }
 
-[relation="Self"]{
+/*[relation="Self"]{
     top:400px;
     left:400px;
     position: fixed;
-}
+}*/
 
-[relation="Cousin"]{ 
-    left:-60px;
-}
-
-[relation="Cousin"]:first{
+.collection {
+    display: block;
     left: initial;
 }
 
-.collection, .collection member:first-child {
-    display: block;
-    clear: left;
+.collection member:not(:first-child){
+    left: -70px;
+    position: relative;
+}
+.collection [relation="Mother"],[relation="Father"]{
+    
+}
+member:hover .hex .middle{
+    border-right: 1px solid red;
+    border-left: 1px solid red;
+    z-index: 9999!important;
+    cursor: pointer;
 }
 
-.collection member{
-    left: -70px;
+member:hover .hex .top{
+    border-bottom: 30px solid red;
+    z-index: 9999!important;
+}
+
+member:hover .hex .bottom{
+    border-top: 30px solid red;
+    z-index: 9999!important;
 }

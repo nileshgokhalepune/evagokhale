@@ -194,7 +194,7 @@ var jsonobject = {
     ],
     siblings: [
         {
-            relation: 'Step brother',
+            relation: 'Brother',
             name: 'R',
             placeInHirerchy: 2,
             id: 4
