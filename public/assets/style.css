@@ -51,6 +51,15 @@ input[type=text]{
     margin-left: 53px;
 }*/
 
+.header{
+    position: fixed;
+    height: 30px;
+    top:0;
+    left: 0;
+    right: 0;
+    background-color: darkgreen;
+}
+
 .family-container{
     left: 0;
     right: 0;
@@ -58,24 +67,36 @@ input[type=text]{
     bottom: 0;
 }
 
-/*[relation="Self"]{
+[relation="Self"]{
     top:400px;
     left:400px;
     position: fixed;
-}*/
+}
 
 .collection {
     display: block;
     left: initial;
 }
 
-.collection member:not(:first-child){
+.collection member{
+    float: left;
+    margin-right: -50px;
+}
+
+member:not(:hover) .hex .middle .bottom{
+    background-color: transparent;
+}
+
+/*.collection member:not(:first-child){
     left: -70px;
     position: relative;
-}
-.collection [relation="Mother"],[relation="Father"]{
-    
-}
+}*/
+/*
+member:not(:hover) .hex .middle{
+    z-index: 0;
+    background-color: transparent;
+}*/
+
 member:hover .hex .middle{
     border-right: 1px solid red;
     border-left: 1px solid red;

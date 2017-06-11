@@ -5,8 +5,12 @@ import { StartupService } from './services/startup.service';
     selector: 'app',
     template: `
         <div>
-            Start here
-            <family *ngIf="isLoggedin" [user]="user"></family>
+            <div class="header">
+                Your Family
+            </div>
+            <div  style="position:relative">
+                <family *ngIf="isLoggedin" [user]="user"></family>
+            </div>
             <login *ngIf="!isLoggedin">
             </login>
         </div>
