@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver, AfterViewInit, ViewChild } from '@angular/core';
 import { StartupService } from './services/startup.service';
-import { FamilyComponent } from './user/user.component';
+import { FamilyComponent, currentUser } from './user/user.component';
 
 @Component({
     selector: 'app',
@@ -9,6 +9,7 @@ import { FamilyComponent } from './user/user.component';
             Family
         </div>
         <div class="main" #main>
+            <family-container [user]="user"></family-container>
         </div>
         <div class="other" #other>
         </div>
@@ -32,9 +33,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     public ngAfterViewInit() {
-        this.main.clear();
-        var familyComponentFactory = this.componentFactoryResolver.resolveComponentFactory(FamilyComponent);
-        var mainInstance = this.main.createComponent(familyComponentFactory).instance;
-        mainInstance.user = this.user;
+        // this.main.clear();
+        // var familyComponentFactory = this.componentFactoryResolver.resolveComponentFactory(FamilyComponent);
+        // var mainInstance = this.main.createComponent(familyComponentFactory).instance;
+        // mainInstance.user = this.user;
     }
 }

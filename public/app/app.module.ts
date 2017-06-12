@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { StartupService } from './services/startup.service';
 import { FamilyComponent, MemberComponent } from './user/user.component';
-
+import { FamilyContainerComponent } from './user/familycontainer.component';
+import { MemberEventService } from './services/event.service';
 export function init(startUp: StartupService) {
     return () => startUp.loadConfig();
 };
@@ -14,12 +15,14 @@ export function init(startUp: StartupService) {
     ],
     entryComponents: [
         MemberComponent,
-        FamilyComponent
+        FamilyComponent,
+        FamilyContainerComponent
     ],
     declarations: [
         AppComponent,
         FamilyComponent,
-        MemberComponent
+        MemberComponent,
+        FamilyContainerComponent
     ],
     providers: [
         {
@@ -28,7 +31,8 @@ export function init(startUp: StartupService) {
             deps: [StartupService],
             multi: true
         },
-        StartupService
+        StartupService,
+        MemberEventService
     ],
     bootstrap: [
         AppComponent

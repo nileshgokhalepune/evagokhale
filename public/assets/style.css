@@ -56,46 +56,19 @@ input[type=text]{
     right: 0;
     top:0;
     bottom: 0;
+    background-color: silver;
 }
 
-[relation="Self"]{
-    top:85%;
-    left:50%;
-    /*position: fixed;*/
-}
-
-.collection {
-    display: block;
-    left: initial;
-    top:10px;
-}
-
-.collection member:not(:first-child){
-    left: -70px;
-    position: relative;
-}
-
-.parents{
-    top:95%;
-    left:50%;
-    /*position: fixed;*/
-}
-
-member:hover .hex .middle{
-    border-right: 1px solid red;
-    border-left: 1px solid red;
-    z-index: 9999!important;
+member:hover{
     cursor: pointer;
 }
 
-member:hover .hex .top{
-    border-bottom: 30px solid red;
-    z-index: 9999!important;
-}
-
-member:hover .hex .bottom{
-    border-top: 30px solid red;
-    z-index: 9999!important;
+.mainFamily{
+    background-color: silver;
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+    display: inline-block;
 }
 
 .header{
