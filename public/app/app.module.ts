@@ -2,7 +2,8 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { StartupService } from './services/startup.service';
-import { FamilyComponent, MemberComponent } from './user/user.component';
+import { FamilyComponent } from './user/user.component';
+import { MemberComponent } from './user/member.component';
 import { FamilyContainerComponent } from './user/familycontainer.component';
 import { MemberEventService } from './services/event.service';
 export function init(startUp: StartupService) {

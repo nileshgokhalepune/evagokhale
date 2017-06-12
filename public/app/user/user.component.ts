@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild, ViewContainerRef, ComponentFactory
 import { member } from '../classess/member';
 import { EventObject } from '../classess/eventobject';
 import { MemberEventService } from '../services/event.service';
+import { MemberComponent } from '../user/member.component';
 
 @Component({
     selector: 'family',
@@ -118,71 +119,6 @@ export class FamilyComponent implements OnInit, AfterViewInit {
     }
 }
 
-@Component({
-    selector: 'member',
-    template: `
-        <div [attr.relation]="relation" [attr.title]="relation" [ngStyle]="style" (click)="clickedMe()">
-            <div class="hex">
-                <div class="top"></div>
-                <div class="middle">{{detail.name}}</div>
-                <div class="bottom"></div>
-            </div>
-            <div style="position:absolute">
-                <button *ngIf="showAdd"></button>
-            </div>
-        </div>
-    `,
-    host: {
-        '(mouseenter)': 'onmouseenter()',
-        '(mouseleave)': 'onmouseleave()'
-    }
-})
-export class MemberComponent implements AfterViewInit {
-    @Input('detail') detail: member;
-    @Input('relation') relation: string;
-    @Output('clicked') clicked: EventEmitter<string> = new EventEmitter<string>();
-    private showAdd: boolean = false;
-    private style: any = {};
-    private styleFactory: StyleFactory;
-
-    constructor(private eventService: MemberEventService) {
-        this.styleFactory = new StyleFactory();
-    }
-
-    ngAfterViewInit() {
-        if (this.detail)
-            this.style = this.styleFactory.getStyle(this.detail.relation);
-    }
-
-    private clickedMe() {
-        if (this.detail.relation !== 'Self') {
-            var eventObject: EventObject = {
-                type: 'Show',
-                detail: this.detail
-
-            }
-            this.eventService.next(eventObject);
-        }
-    }
-
-    private onmouseenter() {
-        this.showAdd = true;
-    }
-
-    private onmouseleave() {
-        this.showAdd = false;
-    }
-}
-
-export class StyleFactory {
-    getStyle(relation: string): IStyle {
-        if (relation === "Self") {
-            return new SelfStyle();
-        } else {
-            return new DefaultStyle();
-        }
-    }
-}
 
 @Component({
 
@@ -196,28 +132,6 @@ export class RelationDirective {
 
     setCoordinates(first: any, second: any) {
 
-    }
-}
-
-export interface IStyle {
-    style(): any;
-}
-
-export class DefaultStyle implements IStyle {
-    style(): any {
-        return {
-
-        }
-    }
-}
-
-export class SelfStyle implements IStyle {
-    public style(): any {
-        return {
-            'bottom': "10px!important",
-            'postion': "relative",
-            'color': 'white'
-        }
     }
 }
 

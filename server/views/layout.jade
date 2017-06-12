@@ -5,12 +5,14 @@ html
     meta(name="viewport",content="width=device-width, initial-scale=1.0")
     title= title
     link(href="/assets/style.css",rel="stylesheet")
+    link(href="/bootstrap/dist/css/bootstrap.css" rel="stylesheet")
     script(src="/es6-shim/es6-shim.js")
     script(src="/es6-promise/dist/es6-promise.js")
     script(src="/core-js/client/shim.min.js")
     script(src="/reflect-metadata/Reflect.js")
     script(src="/systemjs/dist/system.src.js")
     script(src="/zone.js/dist/zone.js")
+    script(src="/bootstrap/dist/js/bootstrap.js")
     <!-- 2. Configure SystemJS -->
     script(src="/systemjs.config.js")
     script System.import('app').catch(function (err) {console.error(err); });

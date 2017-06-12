@@ -33,7 +33,8 @@ export class FamilyContainerComponent {
                         return data.id === eventObject.detail.id;
                     });
                 }
-                this.otherFamilies.push(this.createFamilyContainer(this.others, whichUser));
+                if (whichUser)
+                    this.otherFamilies.push(this.createFamilyContainer(this.others, whichUser));
             }
         })
     }
