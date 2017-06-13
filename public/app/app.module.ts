@@ -1,18 +1,21 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { StartupService } from './services/startup.service';
 import { FamilyComponent } from './user/user.component';
 import { MemberComponent } from './user/member.component';
 import { FamilyContainerComponent } from './user/familycontainer.component';
 import { MemberEventService } from './services/event.service';
+import { SendInviteComponent } from './user/sendinvite.component';
 export function init(startUp: StartupService) {
     return () => startUp.loadConfig();
 };
 
 @NgModule({
     imports: [
-        BrowserModule
+        BrowserModule,
+        BrowserAnimationsModule
     ],
     entryComponents: [
         MemberComponent,
@@ -23,7 +26,8 @@ export function init(startUp: StartupService) {
         AppComponent,
         FamilyComponent,
         MemberComponent,
-        FamilyContainerComponent
+        FamilyContainerComponent,
+        SendInviteComponent
     ],
     providers: [
         {

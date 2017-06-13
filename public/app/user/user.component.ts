@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, AfterViewInit, Directive, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, AfterViewInit, Directive, ElementRef, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
+import { } from '@angular/platform-browser';
 import { member } from '../classess/member';
 import { EventObject } from '../classess/eventobject';
 import { MemberEventService } from '../services/event.service';
@@ -45,8 +46,8 @@ export class FamilyComponent implements OnInit, AfterViewInit {
     @ViewChild('friends', { read: ViewContainerRef }) friends: ViewContainerRef;
     @ViewChild('self', { read: ViewContainerRef }) self: ViewContainerRef;
     @Output('childClicked') childClicked: EventEmitter<string> = new EventEmitter<string>();
-
-    constructor(private viewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver, private eventService: MemberEventService) {
+    @ViewChildren(MemberComponent) childre: QueryList<MemberComponent>;
+    constructor(private viewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver, private eventService: MemberEventService, private element: ElementRef) {
     }
 
     ngOnInit() {
@@ -80,8 +81,9 @@ export class FamilyComponent implements OnInit, AfterViewInit {
         }
         const self = <MemberComponent>this.self.createComponent(componentFactory).instance;
         self.detail = { id: 1, name: this.currentUser.name, relation: this.currentUser.relation };
-
         self.relation = self.detail.relation;
+
+
         if (this.currentUser.spouse) {
             const spouse = <MemberComponent>this.spouse.createComponent(componentFactory).instance;
             spouse.detail = this.currentUser.spouse ? this.currentUser.spouse : null;
@@ -112,8 +114,17 @@ export class FamilyComponent implements OnInit, AfterViewInit {
                 frnd.relation = element.relation;
             });
         }
+
+        this.getBoundingRects();
     }
 
+
+    private getBoundingRects() {
+        var members:Array<any> = this.element.nativeElement.querySelectorAll("member");
+        members.forEach(element => {
+           var boundingRects = element.getBoundingClientRect(); 
+        });
+    }
     private clicked(value: string) {
 
     }

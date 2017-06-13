@@ -7,31 +7,20 @@ import { EventObject } from '../classess/eventobject';
 @Component({
     selector: 'member',
     template: `
-        <div [attr.relation]="relation" [attr.title]="relation" [ngStyle]="style" (click)="clickedMe()">
+        <div [id]="detail.id" [attr.relation]="detail.relation" [attr.title]="relation" [ngStyle]="style" (click)="clickedMe()">
             <div class="hex">
                 <div class="top"></div>
                 <div class="middle">{{detail.name}}</div>
                 <div class="bottom"></div>
-                <button [@flyInOut]="buttonState" class="btn btn-success" *ngIf="showAdd" (click)="addDialog()">Add Family</button>
+                <button class="btn btn-success" *ngIf="showAdd" (click)="addDialog()">Add Family</button>
             </div>
         </div>
+        <send-invite *ngIf="sendInvite" [parent]="this"></send-invite>
     `,
     host: {
         '(mouseenter)': 'onmouseenter()',
         '(mouseleave)': 'onmouseleave()'
-    },
-    animations: [
-        trigger('flyInOut', [
-            state('visible', style({ transform: 'scale(1.5)' })),
-            state('hidden', style({ transform: 'translateY(1)' })),
-            transition('hidden => visible ', [
-                animate('1000ms ease-in')
-            ]),
-            transition('visible => hidden', [
-                animate('1000ms ease-out')
-            ])
-        ])
-    ]
+    }
 })
 export class MemberComponent implements AfterViewInit {
     @Input('detail') detail: member;
@@ -41,6 +30,7 @@ export class MemberComponent implements AfterViewInit {
     private buttonState: string;
     private style: any = {};
     private styleFactory: StyleFactory;
+    public sendInvite:boolean;
 
     constructor(private eventService: MemberEventService) {
         this.styleFactory = new StyleFactory();
@@ -63,16 +53,18 @@ export class MemberComponent implements AfterViewInit {
     }
 
     private onmouseenter() {
-        this.buttonState = "visible";
+        this.buttonState = "active";
         this.showAdd = true;
     }
 
     private onmouseleave() {
-        this.buttonState = "hidden";
+        this.buttonState = "inactive";
         this.showAdd = false;
     }
 
     private addDialog() {
-
+        event.preventDefault();
+        event.stopPropagation();
+        this.sendInvite = true;
     }
 }
