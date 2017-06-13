@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { currentUser } from '../user/user.component';
 @Injectable()
 export class StartupService {
 
@@ -12,6 +12,6 @@ export class StartupService {
     }
 
     public user() {
-        return "eva";
+        return currentUser;
     }
 }

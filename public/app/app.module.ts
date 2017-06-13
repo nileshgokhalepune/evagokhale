@@ -2,8 +2,10 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { StartupService } from './services/startup.service';
-import { LoginComponent, MmmberArea, MemberComponent } from './user/user.component';
-
+import { FamilyComponent } from './user/user.component';
+import { MemberComponent } from './user/member.component';
+import { FamilyContainerComponent } from './user/familycontainer.component';
+import { MemberEventService } from './services/event.service';
 export function init(startUp: StartupService) {
     return () => startUp.loadConfig();
 };
@@ -13,13 +15,15 @@ export function init(startUp: StartupService) {
         BrowserModule
     ],
     entryComponents: [
-        MemberComponent
+        MemberComponent,
+        FamilyComponent,
+        FamilyContainerComponent
     ],
     declarations: [
         AppComponent,
-        LoginComponent,
-        MmmberArea,
-        MemberComponent
+        FamilyComponent,
+        MemberComponent,
+        FamilyContainerComponent
     ],
     providers: [
         {
@@ -28,7 +32,8 @@ export function init(startUp: StartupService) {
             deps: [StartupService],
             multi: true
         },
-        StartupService
+        StartupService,
+        MemberEventService
     ],
     bootstrap: [
         AppComponent

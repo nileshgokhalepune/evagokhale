@@ -1,25 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver, AfterViewInit, ViewChild } from '@angular/core';
 import { StartupService } from './services/startup.service';
+import { FamilyComponent, currentUser } from './user/user.component';
 
 @Component({
     selector: 'app',
     template: `
-        <div>
-            <div class="header">
-                Your Family
-            </div>
-            <div  style="position:relative">
-                <family *ngIf="isLoggedin" [user]="user"></family>
-            </div>
-            <login *ngIf="!isLoggedin">
-            </login>
+        <div class="header">
+            Family
         </div>
+        <div class="main" #main>
+            <family-container [user]="user"></family-container>
+        </div>
+        <div class="other" #other>
+        </div>
+
     `
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
     private isLoggedin: boolean = false;
     private user: any;
-    constructor(private startup: StartupService) {
+    @ViewChild('other', { read: ViewContainerRef }) otherContainer: ViewContainerRef;
+    @ViewChild('main', { read: ViewContainerRef }) main: ViewContainerRef;
+
+    constructor(private startup: StartupService, private componentFactoryResolver: ComponentFactoryResolver) {
     }
 
     public ngOnInit() {
@@ -27,5 +30,12 @@ export class AppComponent implements OnInit {
         if (this.isLoggedin) {
             this.user = this.startup.user();
         }
+    }
+
+    public ngAfterViewInit() {
+        // this.main.clear();
+        // var familyComponentFactory = this.componentFactoryResolver.resolveComponentFactory(FamilyComponent);
+        // var mainInstance = this.main.createComponent(familyComponentFactory).instance;
+        // mainInstance.user = this.user;
     }
 }
