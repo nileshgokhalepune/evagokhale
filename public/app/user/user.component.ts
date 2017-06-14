@@ -9,7 +9,7 @@ import { MemberComponent } from '../user/member.component';
     selector: 'family',
     template: `
         <div class="family-container">
-            <div class="collection parents">
+            <div class="collection parents deg0">
                 <ng-template #parents></ng-template>
             </div>
             <div class="spouse">
@@ -24,7 +24,7 @@ import { MemberComponent } from '../user/member.component';
             <div class="collection friends">
                 <ng-template #friends></ng-template>            
             </div>
-            <div class="self">
+            <div class="self center">
                 <ng-template #self></ng-template>
             </div>
         </div>
@@ -125,11 +125,11 @@ export class FamilyComponent implements OnInit, AfterViewInit {
            var boundingRects = element.getBoundingClientRect(); 
         });
     }
+    
     private clicked(value: string) {
 
     }
 }
-
 
 @Component({
 
@@ -147,7 +147,7 @@ export class RelationDirective {
 }
 
 export const currentUser = {
-    name: 'E',
+    name: 'Eva',
     id: 1,
     placeInHirerchy: 2,
     relation: 'Self',
@@ -155,20 +155,20 @@ export const currentUser = {
         {
             relation: 'Mother',
             placeInHirerchy: 1,
-            name: 'P',
+            name: 'Priti',
             id: 2
         },
         {
             relation: 'Father',
             placeInHirerchy: 1,
-            name: 'N',
+            name: 'Nilesh',
             id: 3
         }
     ],
     siblings: [
         {
             relation: 'Brother',
-            name: 'R',
+            name: 'Rishabh',
             placeInHirerchy: 2,
             id: 4
         }

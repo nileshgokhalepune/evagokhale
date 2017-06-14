@@ -30,13 +30,16 @@ export class MemberComponent implements AfterViewInit {
     private buttonState: string;
     private style: any = {};
     private styleFactory: StyleFactory;
-    public sendInvite:boolean;
+    public sendInvite: boolean;
+    private boundingRect: any = {};
 
-    constructor(private eventService: MemberEventService) {
+    constructor(private eventService: MemberEventService, private element: ElementRef) {
         this.styleFactory = new StyleFactory();
     }
 
     ngAfterViewInit() {
+        this.boundingRect = this.element.nativeElement.getBoundingClientRect();
+
         if (this.detail)
             this.style = this.styleFactory.getStyle(this.detail.relation);
     }
@@ -46,7 +49,6 @@ export class MemberComponent implements AfterViewInit {
             var eventObject: EventObject = {
                 type: 'Show',
                 detail: this.detail
-
             }
             this.eventService.next(eventObject);
         }
@@ -54,12 +56,14 @@ export class MemberComponent implements AfterViewInit {
 
     private onmouseenter() {
         this.buttonState = "active";
-        this.showAdd = true;
+        if (this.detail.relation === 'Self')
+            this.showAdd = true;
     }
 
     private onmouseleave() {
         this.buttonState = "inactive";
-        this.showAdd = false;
+        if (this.detail.relation === 'Self')
+            this.showAdd = false;
     }
 
     private addDialog() {

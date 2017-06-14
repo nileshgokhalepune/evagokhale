@@ -9,11 +9,6 @@ input[type=text]{
     padding: 3px;
 }
 
-#self {
-    border: 1px solid blue;
-    border-radius: 20px;
-    width: 50px;
-}
 
 .hex {
     float: left;
@@ -22,13 +17,13 @@ input[type=text]{
 }
 .hex .top {
     width: 0;
-    border-bottom: 30px solid #6C6;
-    border-left: 52px solid transparent;
-    border-right: 52px solid transparent;
+    border-bottom: 10px solid #6C6;
+    border-left: 32px solid transparent;
+    border-right: 32px solid transparent;
 }
 .hex .middle {
-    width: 104px;
-    height: 60px;
+    width: 65px;
+    height: 20px;
     background: #6C6;
     text-align: center;
     vertical-align: middle;
@@ -36,20 +31,10 @@ input[type=text]{
 
 .hex .bottom {
     width: 0;
-    border-top: 30px solid #6C6;
-    border-left: 52px solid transparent;
-    border-right: 52px solid transparent;
+    border-top: 10px solid #6C6;
+    border-left: 32px solid transparent;
+    border-right: 32px solid transparent;
 }
-
-/*.hex-row {
-    clear: left;
-    margin-top: 10px;
-}
-
-.hex-row.even {
-    margin-top: 10px;
-    margin-left: 53px;
-}*/
 
 .header{
     position: fixed;
@@ -61,10 +46,18 @@ input[type=text]{
 }
 
 .family-container{
-    left: 0;
-    right: 0;
-    top:0;
-    bottom: 0;
+    position: relative;
+	width: 24em;
+	height: 24em;
+	padding: 2.8em; /*= 2em * 1.4 (2em = half the width of an img, 1.4 = sqrt(2))*/
+	border: dashed 1px;
+	border-radius: 50%;
+	margin: 1.75em auto 0;
+}
+
+.family-container [relation="Self"]{
+    display: block;
+    width: 100%;
 }
 
 member:hover{
@@ -77,6 +70,7 @@ member:hover{
     width: 100%;
     overflow: visible;
     display: inline-block;
+    border:1px solid red;
 }
 
 .header{
@@ -91,11 +85,6 @@ member:hover{
 .main{
     margin-top: 40px;
 } 
-
-[relation="Self"]{
-    top:50%;
-    left:50%;
-}
  
 .collection member:hover{
     z-index: 9999;    
@@ -105,3 +94,77 @@ member:hover{
     z-index: 0;
     opacity: 0.5;
 }
+
+
+/**
+ * Position icons into circle (SO)
+ * http://stackoverflow.com/q/12813573/1397351 
+ */
+.family-container {
+	position: relative;
+	width: 24em;
+	height: 24em;
+	padding: 2.8em; /*= 2em * 1.4 (2em = half the width of an img, 1.4 = sqrt(2))*/
+	border: dashed 1px;
+	border-radius: 50%;
+	margin: 1.75em auto 0;
+}
+.family-container .self {
+	display: block;
+	overflow: visible;
+	position: absolute;
+	top: 50%; left: 50%;
+	/*width: 4em; height: 4em;*/
+	margin: -2em; /* 2em = 4em/2 */ /* half the width */
+}
+
+.family-container .self  .hex{ display: block; width: 100%; }
+.collection.parents { transform: translate(12em); } /* 12em = half the width of the wrapper */
+.collection.siblings  { transform: rotate(45deg) translate(12em) rotate(-45deg); } /*.deg45*/
+.collection.spouse { transform: rotate(135deg) translate(12em) rotate(-135deg); }
+.deg180 { transform: translate(-12em); }
+.deg225 { transform: rotate(225deg) translate(12em) rotate(-225deg); }
+.deg315 { transform: rotate(315deg) translate(12em) rotate(-315deg); }
+
+/* this is just for showing the angle on hover */
+.circle-container a:not(.center):before {
+	position: absolute;
+	width: 4em;
+	color: white;
+	opacity: 0;
+	background: rgba(0,0,0,.5);
+	font: 1.25em/3.45 Courier, monospace;
+	letter-spacing: 2px;
+	text-decoration: none;
+	text-indent: -2em;
+	text-shadow: 0 0 .1em deeppink;
+	transition: .7s; /* only works in Firefox */
+	content: attr(class)'°';
+}
+.circle-container a:hover:before { opacity: 1; }
+
+/* this is for showing the circle on which the images are placed */
+.circle-container:after {
+	position: absolute;
+	top: 2.8em; left: 2.8em;
+	width: 24em; height: 24em;
+	border: dashed 1px deeppink;
+	border-radius: 50%;
+	opacity: .3;
+	pointer-events: none;
+	content: '';
+}
+.circle-container:hover:after { opacity: 1; }
+.circle-container a:not(.center):after {
+	position: absolute;
+	top: 50%; left: 50%;
+	width: 4px; height: 4px;
+	border-radius: 50%;
+	box-shadow: 0 0 .5em .5em white;
+	margin: -2px;
+	background: deeppink;
+	opacity: .3;
+	content: '';
+}
+.circle-container:hover a:after { opacity: 1; }
+.circle-container a:hover:after { opacity: .3; }

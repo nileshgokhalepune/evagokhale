@@ -13,8 +13,8 @@ export class DefaultStyle implements IStyle {
 export class SelfStyle implements IStyle {
     public style(): any {
         return {
-            'bottom': "10px!important",
-            'postion': "relative",
+            'bottom': '10px!important',
+            'postion': 'relative',
             'color': 'white'
         }
     }
