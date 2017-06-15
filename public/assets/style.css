@@ -36,6 +36,26 @@ input[type=text]{
     border-right: 32px solid transparent;
 }
 
+.empty > .hex{
+    float: left;
+    margin-left: 3px;
+    margin-bottom: -26px;
+}
+
+.empty > .hex .top{
+    width: 0;
+    border-bottom: 2px dotted #6C6;
+    border-left: 2px dotted #6c6;
+    border-right: 2px solid  #6c6;
+}
+
+.empty > .hex .bottom{
+    width: 0;
+    border-top: 2px dotted #6C6;
+    border-left: 2px dotted transparent;
+    border-right: 2px dotted transparent;
+}
+
 .header{
     position: fixed;
     height: 30px;
@@ -122,7 +142,7 @@ member:hover{
 .collection.parents { transform: translate(12em); } /* 12em = half the width of the wrapper */
 .collection.siblings  { transform: rotate(45deg) translate(12em) rotate(-45deg); } /*.deg45*/
 .collection.spouse { transform: rotate(135deg) translate(12em) rotate(-135deg); }
-.deg180 { transform: translate(-12em); }
+.collection .friends { transform: translate(-12em); }/*.deg180*/
 .deg225 { transform: rotate(225deg) translate(12em) rotate(-225deg); }
 .deg315 { transform: rotate(315deg) translate(12em) rotate(-315deg); }
 
@@ -166,5 +186,6 @@ member:hover{
 	opacity: .3;
 	content: '';
 }
+
 .circle-container:hover a:after { opacity: 1; }
 .circle-container a:hover:after { opacity: .3; }

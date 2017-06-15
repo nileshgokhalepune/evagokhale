@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, AfterViewInit, Directive, ElementRef, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
-import { } from '@angular/platform-browser';
 import { member } from '../classess/member';
 import { EventObject } from '../classess/eventobject';
 import { MemberEventService } from '../services/event.service';
@@ -24,6 +23,13 @@ import { MemberComponent } from '../user/member.component';
             <div class="collection friends">
                 <ng-template #friends></ng-template>            
             </div>
+            <div *ngIf="!user.friends || user.friends.length <=0" class="empty">
+                <div class="hex">
+                    <div class="top"></div>
+                    <div class="middle">Empty</div>
+                    <div class="bottom"></div>
+                </div>
+            </div>
             <div class="self center">
                 <ng-template #self></ng-template>
             </div>
@@ -47,6 +53,7 @@ export class FamilyComponent implements OnInit, AfterViewInit {
     @ViewChild('self', { read: ViewContainerRef }) self: ViewContainerRef;
     @Output('childClicked') childClicked: EventEmitter<string> = new EventEmitter<string>();
     @ViewChildren(MemberComponent) childre: QueryList<MemberComponent>;
+
     constructor(private viewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver, private eventService: MemberEventService, private element: ElementRef) {
     }
 
@@ -120,12 +127,12 @@ export class FamilyComponent implements OnInit, AfterViewInit {
 
 
     private getBoundingRects() {
-        var members:Array<any> = this.element.nativeElement.querySelectorAll("member");
+        var members: Array<any> = this.element.nativeElement.querySelectorAll("member");
         members.forEach(element => {
-           var boundingRects = element.getBoundingClientRect(); 
+            var boundingRects = element.getBoundingClientRect();
         });
     }
-    
+
     private clicked(value: string) {
 
     }
