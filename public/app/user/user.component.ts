@@ -23,13 +23,6 @@ import { MemberComponent } from '../user/member.component';
             <div class="collection friends">
                 <ng-template #friends></ng-template>            
             </div>
-            <div *ngIf="!user.friends || user.friends.length <=0" class="empty">
-                <div class="hex">
-                    <div class="top"></div>
-                    <div class="middle">Empty</div>
-                    <div class="bottom"></div>
-                </div>
-            </div>
             <div class="self center">
                 <ng-template #self></ng-template>
             </div>
@@ -191,6 +184,7 @@ export const otherUsers = [
         relation: 'Self',
         placeInHirerchy: 1,
         name: 'P',
+        profileImage:'https://cdn.pixabay.com/photo/2014/06/03/19/38/board-361516_960_720.jpg',
         id: 2,
         parents: [],
         siblings: [

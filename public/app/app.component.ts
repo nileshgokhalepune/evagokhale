@@ -13,7 +13,6 @@ import { FamilyComponent, currentUser } from './user/user.component';
         </div>
         <div class="other" #other>
         </div>
-
     `
 })
 export class AppComponent implements OnInit, AfterViewInit {
