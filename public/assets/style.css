@@ -139,3 +139,15 @@ member:hover{
     transform:rotate(45deg);
     border:1px solid transparent;
 }
+
+.danglingMenu{
+    position: fixed;
+    right: 0;
+    width: 100px;
+    transition: ease-in-out;
+}
+
+.danglingMenu > div{
+    width: 100%;
+    word-break: normal;
+}

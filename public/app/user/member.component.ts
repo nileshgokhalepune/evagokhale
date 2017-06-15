@@ -8,13 +8,6 @@ import { EventObject } from '../classess/eventobject';
     selector: 'member',
     template: `
         <div [id]="detail.id" [attr.relation]="detail.relation" [attr.title]="relation" [ngStyle]="style" (click)="clickedMe()">
-            <!--<div class="hex">
-                <div class="top"></div>
-                <div class="middle">{{detail.name}}</div>
-                <div class="bottom"></div>
-                <button class="btn btn-success" *ngIf="showAdd" (click)="addDialog()" title="Add Family"><i class="fa fa-plus"></i></button>
-                <button class="btn btn-primary" *ngIf="showAdd" title="Add Photos"><i class="fa fa-picture-o"></i></button>
-            </div> -->
             <div class="square" style="position:relative">
                 <div>
                     <img class="memberImage" *ngIf="detail && detail.profileImage" [src]="detail.profileImage" />
@@ -34,12 +27,14 @@ export class MemberComponent implements AfterViewInit {
     @Input('detail') detail: member;
     @Input('relation') relation: string;
     @Output('clicked') clicked: EventEmitter<string> = new EventEmitter<string>();
+    @Output('hovered') hovered:EventEmitter<member> = new EventEmitter<member>();
     private showAdd: boolean = false;
     private buttonState: string;
     private style: any = {};
     private styleFactory: StyleFactory;
     public sendInvite: boolean;
     private boundingRect: any = {};
+    private showMenu: boolean = false;
 
     constructor(private eventService: MemberEventService, private element: ElementRef) {
         this.styleFactory = new StyleFactory();
@@ -65,7 +60,7 @@ export class MemberComponent implements AfterViewInit {
     private onmouseenter() {
         this.buttonState = "active";
         if (this.detail.relation === 'Self')
-            this.showAdd = true;
+            this.showMenu=!this.showMenu;
     }
 
     private onmouseleave() {
@@ -78,5 +73,9 @@ export class MemberComponent implements AfterViewInit {
         event.preventDefault();
         event.stopPropagation();
         this.sendInvite = true;
+    }
+
+    private onmouseclick(){
+        this.showMenu = !this.showMenu;
     }
 }

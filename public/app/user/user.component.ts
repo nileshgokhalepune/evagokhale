@@ -27,6 +27,18 @@ import { MemberComponent } from '../user/member.component';
                 <ng-template #self></ng-template>
             </div>
         </div>
+        
+        <div class="danglingMenu" *ngIf="showMenu">
+            <div>
+                <i class="fa fa-plus fa-2x"></i>
+                Add Family Member
+            </div>
+            <div>
+                <i class="fa fa-plus"></i>
+                Add Friend
+            </div>
+        </div>
+
     `
     //templateUrl: 'partials/family'
 })
