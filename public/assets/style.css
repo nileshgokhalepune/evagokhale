@@ -67,8 +67,8 @@ input[type=text]{
 
 .family-container{
     position: relative;
-	width: 24em;
-	height: 24em;
+	width: 50em;
+	height: 40em;
 	padding: 2.8em; /*= 2em * 1.4 (2em = half the width of an img, 1.4 = sqrt(2))*/
 	border: dashed 1px;
 	/*border-radius: 50%;*/
@@ -150,4 +150,28 @@ member:hover{
 .danglingMenu > div{
     width: 100%;
     word-break: normal;
+}
+
+.self{
+    position: absolute;
+    bottom: 35%;
+    left:45%;
+}
+
+[relation="Mother"]{
+    position: absolute;
+    left: 50px;
+    top: 10;
+}
+
+[relation="Father"]{
+    position: absolute;
+    right: 50px;
+    top: 10;
+}
+
+[relation="Sibling"]{
+    position: absolute;
+    left: 50px;
+    bottom: 0;
 }
