@@ -9,7 +9,7 @@ import { FamilyComponent, currentUser } from './user/user.component';
             Family
         </div>
         <div class="main" #main>
-            <family-container [user]="user"></family-container>
+            <family-container [user]="user" [attr.familyId]="user.id"></family-container>
         </div>
         <div class="other" #other>
         </div>

@@ -7,12 +7,10 @@ import { EventObject } from '../classess/eventobject';
 @Component({
     selector: 'member',
     template: `
-        <div [id]="detail.id" [attr.relation]="detail.relation" [attr.title]="relation" [ngStyle]="style" (click)="clickedMe()">
-            <div class="square" style="position:relative">
-                <div>
-                    <img class="memberImage" *ngIf="detail && detail.profileImage" [src]="detail.profileImage" />
-                    <img class="memberImage" *ngIf="detail && !detail.profileImage" src="/assets/missin.gif" />
-                </div>
+        <div type="member" [id]="detail.id" [attr.relation]="detail.relation" [attr.title]="relation" [ngStyle]="style" (click)="clickedMe()">
+            <div>
+                <img class="memberImage" *ngIf="detail && detail.profileImage" [src]="detail.profileImage" />
+                <img class="memberImage" *ngIf="detail && !detail.profileImage" src="/assets/missin.gif" />
             </div>
             <div>{{detail.name}}</div>
         </div>

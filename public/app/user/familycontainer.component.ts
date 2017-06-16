@@ -34,21 +34,22 @@ export class FamilyContainerComponent {
                     });
                 }
                 if (whichUser)
-                    this.otherFamilies.push(this.createFamilyContainer(this.others, whichUser));
+                    this.otherFamilies.push(this.createFamilyContainer(this.others, whichUser, false));
             }
         })
     }
 
     ngAfterViewInit() {
         Promise.resolve().then(() => {
-            this.userFamily = this.createFamilyContainer(this.family, this.user);
+            this.userFamily = this.createFamilyContainer(this.family, this.user, true);
         });
     }
 
-    private createFamilyContainer(containerRef: ViewContainerRef, detail: member) {
+    private createFamilyContainer(containerRef: ViewContainerRef, detail: member, isCurrentFamily: boolean) {
         var componentResolver = this.componentFactoryResolver.resolveComponentFactory(FamilyComponent);
         var family = containerRef.createComponent(componentResolver).instance;
         family.user = detail;
+        family.currentFamily = isCurrentFamily;
         return family;
     }
 }

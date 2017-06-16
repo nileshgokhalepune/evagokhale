@@ -7,7 +7,7 @@ import { MemberComponent } from '../user/member.component';
 @Component({
     selector: 'family',
     template: `
-        <div class="family-container">
+        <div type="family" [attr.current]="currentFamily">
             <div class="collection parents deg0">
                 <ng-template #parents></ng-template>
             </div>
@@ -26,21 +26,18 @@ import { MemberComponent } from '../user/member.component';
             <div class="self center">
                 <ng-template #self></ng-template>
             </div>
-        </div>
-        
-        <div class="danglingMenu" *ngIf="showMenu">
-            <div>
-                <i class="fa fa-plus fa-2x"></i>
-                Add Family Member
+            <div class="danglingMenu" *ngIf="showMenu">
+                <div>
+                    <i class="fa fa-plus fa-2x"></i>
+                    Add Family Member
+                </div>
+                <div>
+                    <i class="fa fa-plus"></i>
+                    Add Friend
+                </div>
             </div>
-            <div>
-                <i class="fa fa-plus"></i>
-                Add Friend
-            </div>
         </div>
-
     `
-    //templateUrl: 'partials/family'
 })
 export class FamilyComponent implements OnInit, AfterViewInit {
     @Input('user') user: any;
@@ -50,6 +47,7 @@ export class FamilyComponent implements OnInit, AfterViewInit {
     private spouseDetail: member;
     private motherDetail: member;
     private fatherDetail: member;
+    @Input() public currentFamily: boolean;
     @ViewChild('parents', { read: ViewContainerRef }) parents: ViewContainerRef;
     @ViewChild('spouse', { read: ViewContainerRef }) spouse: ViewContainerRef;
     @ViewChild('siblings', { read: ViewContainerRef }) siblings: ViewContainerRef;
@@ -83,8 +81,8 @@ export class FamilyComponent implements OnInit, AfterViewInit {
         this.children.clear();
 
 
-        if (this.currentUser.parents && this.currentUser.parents.length > 0) {
-            this.currentUser.parents.forEach(element => {
+        if (this.user.parents && this.user.parents.length > 0) {
+            this.user.parents.forEach(element => {
                 var parentComponent = this.parents.createComponent(componentFactory);
                 var parent = parentComponent.instance;
                 parent.relation = element.relation;
@@ -92,35 +90,35 @@ export class FamilyComponent implements OnInit, AfterViewInit {
             });
         }
         const self = <MemberComponent>this.self.createComponent(componentFactory).instance;
-        self.detail = { id: 1, name: this.currentUser.name, relation: this.currentUser.relation };
+        self.detail = { id: 1, name: this.user.name, relation: this.user.relation };
         self.relation = self.detail.relation;
 
 
-        if (this.currentUser.spouse) {
+        if (this.user.spouse) {
             const spouse = <MemberComponent>this.spouse.createComponent(componentFactory).instance;
-            spouse.detail = this.currentUser.spouse ? this.currentUser.spouse : null;
+            spouse.detail = this.user.spouse ? this.user.spouse : null;
             spouse.relation = spouse.detail.relation;
         }
 
-        if (this.currentUser.siblings && this.currentUser.siblings.length > 0) {
-            this.currentUser.siblings.forEach(element => {
+        if (this.user.siblings && this.user.siblings.length > 0) {
+            this.user.siblings.forEach(element => {
                 const frnd = this.siblings.createComponent(componentFactory).instance;
                 frnd.detail = element;
                 frnd.relation = element.relation;
             });
         }
 
-        if (this.currentUser.children && this.currentUser.children.length > 0) {
-            this.currentUser.children.forEach(element => {
+        if (this.user.children && this.user.children.length > 0) {
+            this.user.children.forEach(element => {
                 const child = this.children.createComponent(componentFactory).instance;
                 child.detail = element;
                 child.relation = element.relation;
             });
         }
 
-        if (this.currentUser.friends && this.currentUser.friends.length > 0) {
+        if (this.user.friends && this.user.friends.length > 0) {
             //render friends
-            this.currentUser.friends.forEach(element => {
+            this.user.friends.forEach(element => {
                 const frnd = this.friends.createComponent(componentFactory).instance;
                 frnd.detail = element;
                 frnd.relation = element.relation;
@@ -196,7 +194,7 @@ export const otherUsers = [
         relation: 'Self',
         placeInHirerchy: 1,
         name: 'P',
-        profileImage:'https://cdn.pixabay.com/photo/2014/06/03/19/38/board-361516_960_720.jpg',
+        profileImage: 'https://cdn.pixabay.com/photo/2014/06/03/19/38/board-361516_960_720.jpg',
         id: 2,
         parents: [],
         siblings: [
