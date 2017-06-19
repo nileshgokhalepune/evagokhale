@@ -1,17 +1,20 @@
 [type="family"]{
-    width: 400px; 
+    width: 500px; 
     border:1px solid green;
 }
 
 [type="member"]{
-    height: 70px;
-    width: 70px;
+    width:100px;
+    height: 100px;
     border-radius: 50%;
-    border:1px solid #c1a322; 
 }
 
-[type="member"] img{
-    width: 70px;
-    height: 70px;
+[type="member"] > img {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
+}
+
+.memberName{
+    align-content: center;
 }

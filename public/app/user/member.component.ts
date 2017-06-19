@@ -8,11 +8,11 @@ import { EventObject } from '../classess/eventobject';
     selector: 'member',
     template: `
         <div type="member" [id]="detail.id" [attr.relation]="detail.relation" [attr.title]="relation" [ngStyle]="style" (click)="clickedMe()">
-            <div>
+            <div >
                 <img class="memberImage" *ngIf="detail && detail.profileImage" [src]="detail.profileImage" />
                 <img class="memberImage" *ngIf="detail && !detail.profileImage" src="/assets/missin.gif" />
             </div>
-            <div>{{detail.name}}</div>
+            <div class="memberName">{{detail.name}}</div>
         </div>
         <send-invite *ngIf="sendInvite" [parent]="this"></send-invite>
     `,
