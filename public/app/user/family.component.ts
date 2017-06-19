@@ -47,6 +47,8 @@ export class FamilyComponent implements OnInit, AfterViewInit {
     private spouseDetail: member;
     private motherDetail: member;
     private fatherDetail: member;
+    private familyArray: Array<MemberComponent> = new Array<MemberComponent>();
+
     @Input() public currentFamily: boolean;
     @ViewChild('parents', { read: ViewContainerRef }) parents: ViewContainerRef;
     @ViewChild('spouse', { read: ViewContainerRef }) spouse: ViewContainerRef;
@@ -70,6 +72,14 @@ export class FamilyComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         Promise.resolve().then(() => {
             this.createFamilyMembers(this.currentUser);
+        }).then(() => {
+            this.familyArray.forEach(component => {
+                var rect = component.getBoundingRect();
+                if (component.detail.relation === 'Self') {
+                    //this is the root of family. get all four connector positions.
+                    var connectors = component.getConnectorPositions();
+                }
+            });
         });
     }
 
@@ -79,12 +89,13 @@ export class FamilyComponent implements OnInit, AfterViewInit {
         this.spouse.clear();
         this.siblings.clear();
         this.children.clear();
-
+        this.friends.clear();
 
         if (this.user.parents && this.user.parents.length > 0) {
             this.user.parents.forEach(element => {
                 var parentComponent = this.parents.createComponent(componentFactory);
                 var parent = parentComponent.instance;
+                this.familyArray.push(parent);
                 parent.relation = element.relation;
                 parent.detail = element;
             });
@@ -92,19 +103,21 @@ export class FamilyComponent implements OnInit, AfterViewInit {
         const self = <MemberComponent>this.self.createComponent(componentFactory).instance;
         self.detail = { id: 1, name: this.user.name, relation: this.user.relation };
         self.relation = self.detail.relation;
-
+        this.familyArray.push(self);
 
         if (this.user.spouse) {
             const spouse = <MemberComponent>this.spouse.createComponent(componentFactory).instance;
             spouse.detail = this.user.spouse ? this.user.spouse : null;
             spouse.relation = spouse.detail.relation;
+            this.familyArray.push(spouse);
         }
 
         if (this.user.siblings && this.user.siblings.length > 0) {
             this.user.siblings.forEach(element => {
-                const frnd = this.siblings.createComponent(componentFactory).instance;
-                frnd.detail = element;
-                frnd.relation = element.relation;
+                const sibling = this.siblings.createComponent(componentFactory).instance;
+                sibling.detail = element;
+                sibling.relation = element.relation;
+                this.familyArray.push(sibling);
             });
         }
 
@@ -113,6 +126,7 @@ export class FamilyComponent implements OnInit, AfterViewInit {
                 const child = this.children.createComponent(componentFactory).instance;
                 child.detail = element;
                 child.relation = element.relation;
+                this.familyArray.push(child);
             });
         }
 
@@ -122,18 +136,9 @@ export class FamilyComponent implements OnInit, AfterViewInit {
                 const frnd = this.friends.createComponent(componentFactory).instance;
                 frnd.detail = element;
                 frnd.relation = element.relation;
+                this.familyArray.push(frnd);
             });
         }
-
-        this.getBoundingRects();
-    }
-
-
-    private getBoundingRects() {
-        var members: Array<any> = this.element.nativeElement.querySelectorAll("member");
-        members.forEach(element => {
-            var boundingRects = element.getBoundingClientRect();
-        });
     }
 
     private clicked(value: string) {

@@ -1,8 +1,8 @@
 import { Component, ViewChild, AfterViewInit, Input, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { FamilyComponent } from '../user/user.component';
+import { FamilyComponent, otherUsers } from '../user/family.component';
 import { member } from '../classess/member';
 import { MemberEventService } from '../services/event.service';
-import { otherUsers } from '../user/user.component';
+
 @Component({
     selector: 'family-container',
     template: `

@@ -1,20 +1,33 @@
-[type="family"]{
-    width: 500px; 
-    border:1px solid green;
-}
-
-[type="member"]{
-    width:100px;
-    height: 100px;
-    border-radius: 50%;
-}
-
-[type="member"] > img {
+[type="member"], [type="member"] img{
     width: 100px;
-    height: 100px;
-    border-radius: 50%;
+    height:100px;
+    position: relative;
 }
 
-.memberName{
-    align-content: center;
+.connector{
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    color: green;
 }
+
+.connector-left{
+    top:45%;
+    left:-5px;
+}
+
+
+.connector-right{
+    top:45%;
+    right:-5px;
+}
+
+ .connector-top{
+     top:-5px;
+     left: 45%;
+ }
+
+ .connector-bottom{
+     bottom: -5px;
+     left: 45%;
+ }

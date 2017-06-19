@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewContainerRef, ComponentFactoryResolver, AfterViewInit, ViewChild } from '@angular/core';
 import { StartupService } from './services/startup.service';
-import { FamilyComponent, currentUser } from './user/user.component';
+import { FamilyComponent, currentUser } from './user/family.component';
 
 @Component({
     selector: 'app',

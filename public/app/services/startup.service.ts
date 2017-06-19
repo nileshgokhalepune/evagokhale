@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { currentUser } from '../user/user.component';
+import { currentUser } from '../user/family.component';
 @Injectable()
 export class StartupService {
 

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { StartupService } from './services/startup.service';
-import { FamilyComponent } from './user/user.component';
+import { FamilyComponent } from './user/family.component';
 import { MemberComponent } from './user/member.component';
 import { FamilyContainerComponent } from './user/familycontainer.component';
 import { MemberEventService } from './services/event.service';

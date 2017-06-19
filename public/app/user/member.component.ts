@@ -13,6 +13,10 @@ import { EventObject } from '../classess/eventobject';
                 <img class="memberImage" *ngIf="detail && !detail.profileImage" src="/assets/missin.gif" />
             </div>
             <div class="memberName">{{detail.name}}</div>
+            <i class="connector connector-left">o</i>
+            <i class="connector connector-right">o</i>
+            <i class="connector connector-top">o</i>
+            <i class="connector connector-bottom">o</i>
         </div>
         <send-invite *ngIf="sendInvite" [parent]="this"></send-invite>
     `,
@@ -25,7 +29,7 @@ export class MemberComponent implements AfterViewInit {
     @Input('detail') detail: member;
     @Input('relation') relation: string;
     @Output('clicked') clicked: EventEmitter<string> = new EventEmitter<string>();
-    @Output('hovered') hovered:EventEmitter<member> = new EventEmitter<member>();
+    @Output('hovered') hovered: EventEmitter<member> = new EventEmitter<member>();
     private showAdd: boolean = false;
     private buttonState: string;
     private style: any = {};
@@ -58,7 +62,7 @@ export class MemberComponent implements AfterViewInit {
     private onmouseenter() {
         this.buttonState = "active";
         if (this.detail.relation === 'Self')
-            this.showMenu=!this.showMenu;
+            this.showMenu = !this.showMenu;
     }
 
     private onmouseleave() {
@@ -73,7 +77,15 @@ export class MemberComponent implements AfterViewInit {
         this.sendInvite = true;
     }
 
-    private onmouseclick(){
+    private onmouseclick() {
         this.showMenu = !this.showMenu;
+    }
+
+    public getConnectorPositions() {
+        var element = this.element.nativeElement;
+    }
+
+    public getBoundingRect(): any {
+        return this.element.nativeElement.getBoundingClientRect();
     }
 }
