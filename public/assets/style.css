@@ -31,3 +31,7 @@
      bottom: -5px;
      left: 45%;
  }
+
+ .memberHover{
+     transform: scale(2);
+ }
