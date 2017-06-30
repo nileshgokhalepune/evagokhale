@@ -28,7 +28,13 @@ var element = (function() {
       var existingStyle = this.getAttribute('style');
       var newStyles = existingStyle ? ";" : "";
       for (var stl in styleObject) {
-          newStyles += stl + ":" + styleObject[stl] + ';';
+        if (existingStyle && existingStyle.indexOf(stl) !== -1) { //this means the style is already there. we need to change the value.
+          var startPos = existingStyle.indexOf(stl);
+          var semiColonPos = existingStyle.indexOf(';', startPos);
+          var currentStl = existingStyle.slice(startPos, semiColonPos);
+          existingStyle = existingStyle.replace(currentStl, "");
+        }
+        newStyles += stl + ":" + styleObject[stl] + ';';
       }
       this.thisElement.style = newStyles;
     }
@@ -104,6 +110,8 @@ var element = (function() {
       classess = '';
 
     this.thisElement.setAttribute('class', classess + classNames);
+
+    return this;
   }
 
   element.prototype.removeClass = function(className) {
@@ -112,7 +120,7 @@ var element = (function() {
       classess = classess.replace(className, '');
       this.thisElement.setAttribute('class', classess);
     }
-
+    return this;
   }
 
   return element;

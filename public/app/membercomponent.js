@@ -11,6 +11,8 @@ var MemberComponent = (function() {
     this.member = member;
     this.relativeComponents = relatives;
     this.memberElement = this.create(member);
+    this.createMenu();
+    this.memberElement.addChild(this.menu.get());
   }
 
   MemberComponent.prototype.joinMembers = function() {
@@ -192,14 +194,38 @@ var MemberComponent = (function() {
       width: '50px'
     }).attributes({
       src: member.imageUrl
-    })).addChild(
-      new elementFactory('div').create().text(member.name)
-    ).on('mouseenter', function(event) {
-      _this.memberElement.addClass(' memberHover');
-    }).on('mouseleave', function(event) {
-      _this.memberElement.removeClass('memberHover');
-    });
+    })).addChild(new elementFactory('div').create().text(member.name))
+      .on('mouseenter', function(event) {
+        _this.memberElement.addClass(' memberHover');
+      })
+      .on('mouseleave', function(event) {
+        _this.memberElement.removeClass('memberHover');
+        _this.menu.style({
+          display: 'none'
+        });
+      })
+      .on('contextmenu', function(event) {
+        _this.menu.style({
+          display: 'inline-block'
+        });
+        event.preventDefault();
+      });
     return memberElement;
+  }
+
+  MemberComponent.prototype.createMenu = function() {
+    var _this = this;
+    _this.menu = new elementFactory('div').create().addClass('menu')
+      .style({
+        display: 'none',
+        position: 'absolute',
+        left: _this.memberElement.style.left + 100,
+        width: '100px'
+      }).addChild(
+      new elementFactory('ul').create()
+        .addChild(new elementFactory('li').create().text('Invite')
+      )
+    );
   }
 
   MemberComponent.prototype.id = function() {

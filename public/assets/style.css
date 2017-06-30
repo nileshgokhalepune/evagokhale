@@ -33,7 +33,21 @@
  }
 
  .memberHover{
-     transform: scale(2);
+     transform: scale(1.5);
      z-index: 9999;
      box-shadow: 10px;
+ }
+
+ .menu  {
+     position: absolute;
+     background-color: gray;
+     box-shadow: 10px;
+     color:red;
+ }
+
+ .menu ul li{
+     display: inline-block;
+     text-decoration: none;
+     list-style: none;
+     left:0px;
  }
