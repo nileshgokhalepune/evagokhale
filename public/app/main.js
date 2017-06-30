@@ -1,19 +1,21 @@
-'use strict';
-
 var family = require('../app/family').family;
 var http = require('../services/baseservice.js').http;
+var pageHandler = require('../core/pagehandler.js').pagehandler;
 
-pagehandler.createContainer();
-function auth() {
-  if (localStorage && localStorage.getItem('user')) {
-    return true;
-  }
-}
+(function() {
+  'use strict';
 
-function loadMembers() {
-  if (auth) {
-    new family(pagehandler, new http($)).create();
+  function auth() {
+    if (localStorage && localStorage.getItem('user')) {
+      return true;
+    }
   }
 
-}
-loadMembers();
+  function loadMembers() {
+    if (auth) {
+      new family(new pageHandler(), new http($)).create();
+    }
+  }
+
+  loadMembers();
+}());

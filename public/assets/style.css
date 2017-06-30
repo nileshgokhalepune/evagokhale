@@ -34,4 +34,6 @@
 
  .memberHover{
      transform: scale(2);
+     z-index: 9999;
+     box-shadow: 10px;
  }

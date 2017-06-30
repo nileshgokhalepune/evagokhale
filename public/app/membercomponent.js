@@ -1,6 +1,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var elementFactory = require('../app/element').element;
 var MemberComponent = (function() {
   var memberElement;
   var relativeComponents;
@@ -9,23 +10,25 @@ var MemberComponent = (function() {
   function MemberComponent(member, relatives) {
     this.member = member;
     this.relativeComponents = relatives;
-    this.memberElement = create(member);
+    this.memberElement = this.create(member);
   }
 
   MemberComponent.prototype.joinMembers = function() {
     if (this.relativeComponents) {
-      var myCoords = this.memberElement.getBoundingClientRect();
+      var myCoords = this.memberElement.get().getBoundingClientRect();
       //draw lines to each relative component.
-      for (var i = 0; i < this.relativeComponents.length - 1; i++) {
+      for (var i = 0; i < this.relativeComponents.length; i++) {
         //var relativeCoords = this.relativeComponents[i].memberElement.getBoundingClientRect();
-        drawLine(this.memberElement, this.relativeComponents[i].memberElement);
+        this.drawLine(this.relativeComponents[i]);
       }
     }
   }
 
-  function drawLine(sourceElemet, destElemet) {
-    var sourceCoords = sourceElemet.getBoundingClientRect();
-    var destCoords = destElemet.getBoundingClientRect();
+  MemberComponent.prototype.drawLine = function(relative) {
+    var sourceElement = this.memberElement.get();
+    var destElement = relative.memberElement.get();
+    var sourceCoords = sourceElement.getBoundingClientRect();
+    var destCoords = destElement.getBoundingClientRect();
     var sourceConnector = getConnector(sourceCoords, destCoords);
     var destConnector = getConnector(destCoords, sourceCoords);
     var x1,
@@ -40,27 +43,56 @@ var MemberComponent = (function() {
       x2 = destConnector.top;
       y2 = destCoords.left + 50;
       sourceLineHeightWidth = y2 - y1;
-      var sourceLine = document.createElement('div');
-      sourceLine.style = "position:absolute;border:1px solid red;";
-      sourceLine.style.height = sourceLineHeightWidth + 'px';
-      sourceLine.style.width = "1px";
-      sourceLine.style.top = y1 + 'px';
-      sourceLine.style.left = x1 + 'px';
-      document.body.appendChild(sourceLine);
+      var sourceLine = new elementFactory('div').create()
+        .style({
+          'overflow': 'visible',
+          'border': '1px solid blue',
+          'position': absolute,
+          'height': sourceLineHeightWidth + 'px',
+          'width': "1px",
+          'top': y1 + 'px',
+          'left': x1 + 'px'
+        });
+
+      destLineHeightWidth = x2 - x1;
+      var destLine = new elementFactory('div').create().style({
+        'position': 'absolute',
+        'border': '1px solid blue',
+        'width': destLineHeightWidth + 'px',
+        'height': '1px',
+        'top': y1 + 'px',
+        'left': x1 + 'px'
+      });
+
     } else {
-      y1 = destConnector.top + 100;
-      x1 = destConnector.left + 50;
-      var divConnector = getConnectorDiv(y1, x1);
+      y1 = destConnector.top;
+      x1 = destConnector.left - 50;
+      //var divConnector = getConnectorDiv(y1, x1);
       y2 = sourceConnector.top + 50;
       x2 = sourceConnector.left;
       sourceLineHeightWidth = x2 - x1;
-      var sourceLine = document.createElement('div');
-      sourceLine.style = "position:absolute;border:1px solid red;";
-      sourceLine.style.width = sourceLineHeightWidth + 'px';
-      sourceLine.style.height = "1px";
-      sourceLine.style.top = y2 + 'px';
-      sourceLine.style.left = x1 + 'px';
-      document.body.appendChild(sourceLine);
+      var sourceLine = new elementFactory('div').create();
+      sourceLine.style({
+        'overflow': 'visible',
+        'border': '1px solid blue',
+        'position': 'absolute',
+        'height': '1px',
+        'width': sourceLineHeightWidth + 'px',
+        'top': y2 + 'px',
+        'left': x1 + 'px'
+      });
+      sourceLine.text(this.member.relation);
+
+      destLineHeightWidth = y2 - y1;
+      var destLine = new elementFactory('div').create().style({
+        'position': 'absolute',
+        'border': '1px solid blue',
+        'width': '1px',
+        'height': destLineHeightWidth + 'px',
+        'top': y1 + 'px',
+        'left': x1 + 'px'
+      });
+      destLine.text(relative.member.relation);
     }
   }
 
@@ -94,8 +126,6 @@ var MemberComponent = (function() {
     var angle = hypotenuse / opposite;
     var sin = Math.pow(Math.sin(angle), -1);
     return sin * 100;
-  // var m = y / x;
-  // return Math.tan(m);
   }
 
   function getConnector(source, dest) {
@@ -127,30 +157,49 @@ var MemberComponent = (function() {
           isnegative: false
         }
       }
+    } else { //if you are here that means all components are in line. We need to work with the lefts here.
+      if ((source.left - dest.left) < 0) {
+        return {
+          top: source.top,
+          left: source.left + 100,
+          isnegative: false
+        }
+      } else if (source.left - dest.left > 0) {
+        return {
+          top: source.top,
+          left: source.left
+        }
+      }
     }
   }
 
-  function create(member) {
-    var memberElement = document.createElement('div');
-    memberElement.setAttribute('style', 'height:100px;width:100px;position:absolute;background-color:green');
-    memberElement.setAttribute('relation', member.relation);
-    memberElement.setAttribute('type', member.type);
-    var divForImag = document.createElement('div');
-    var image = document.createElement('img');
-    image.setAttribute('style', 'height:50px;width:50px');
-    image.setAttribute('src', member.imageUrl);
-    divForImag.appendChild(image);
-    memberElement.appendChild(divForImag);
-    var divForName = document.createElement('div');
-    divForName.innerText = member.name;
-    memberElement.appendChild(divForName);
-    memberElement.addEventListener('mouseover', this.mouseover);
+  MemberComponent.prototype.create = function(member) {
+    var _this = this;
+    var memberElement = new elementFactory('div')
+      .create()
+      .style({
+        height: '100px',
+        width: '100px',
+        'background-color': '#5DADE2',
+        cursor: 'pointer',
+        'border': '1px solid cyan'
+      })
+      .attributes({
+        'relation': member.relation,
+        'type': member.type
+      }).addChild(new elementFactory('img').create().style({
+      height: '50px',
+      width: '50px'
+    }).attributes({
+      src: member.imageUrl
+    })).addChild(
+      new elementFactory('div').create().text(member.name)
+    ).on('mouseenter', function(event) {
+      _this.memberElement.addClass(' memberHover');
+    }).on('mouseleave', function(event) {
+      _this.memberElement.removeClass('memberHover');
+    });
     return memberElement;
-  }
-
-  MemberComponent.prototype.mouseover = function() {
-    var classess = this.memberElement.getAttribute('class');
-    this.memberElement.setAttribute('class', classess + 'memberHover');
   }
 
   MemberComponent.prototype.id = function() {

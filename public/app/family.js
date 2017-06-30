@@ -3,19 +3,20 @@ Object.defineProperty(exports, '__esModule', {
 });
 var membercomponent = require('../app/membercomponent').MemberComponent;
 var memberType = require('../app/member').Member;
-
+var element = require('../app/element').element;
 var family = (function() {
   var myElement;
   var myMembers = [];
   var mainMember;
   function family(pageHandler, http) {
-    this.pageHandler = pagehandler;
+    this.pageHandler = pageHandler;
     this.http = http;
+    this.myMembers = [];
   }
 
   family.prototype.create = function() {
     this.myElement = getTemplate();
-    this.pageHandler.addToContainer(this.myElement);
+    this.pageHandler.addToContainer(this.myElement.get());
     this.fetchMembers(this.http);
   }
 
@@ -33,35 +34,48 @@ var family = (function() {
     //First add all relatives to the dom
     for (var m = 0; m < member.family.length; m++) {
       var memberRelative = new membercomponent(member.family[m]);
-      myMembers.push(memberRelative);
-      _this.myElement.appendChild(memberRelative.element());
+      _this.myMembers.push(memberRelative);
+      _this.myElement.addChild(memberRelative.element());
     }
     //After relatives are added pass the component collecton to the self component.
     //this will allow the self component to position lines between relatives and itself.
-     this.mainMember = new membercomponent(member, myMembers);
-    this.myElement.appendChild(this.mainMember.element());
-    this.positionMembers();
-    this.mainMember.joinMembers();
+    _this.mainMember = new membercomponent(member, _this.myMembers);
+    _this.myElement.addChild(_this.mainMember.memberElement.get());
+    _this.positionMembers();
+    _this.mainMember.joinMembers();
   }
 
   family.prototype.positionMembers = function() {
-    var element = this.mainMember.element();
-    element.style.top = "50%";
-    element.style.left = "50%";
+    // var _this = this;
+    // var element = _this.mainMember.memberElement;
+    // element.style({
+    //   top: "50%",
+    //   left: "50%",
+    //   position: 'absolute'
+    // });
+    // var parentsDiff = 0;
+    // for (var i = 0; i < _this.myMembers.length; i++) {
+    //   if (_this.myMembers[i].member.type === 'Parent') {
+    //     var memberElement = _this.myMembers[i].memberElement.get();
+    //     memberElement.style.left = (memberElement.style.left.substr(0, memberElement.style.left.length - 3) + parentsDiff) + 'px';
+    //     parentsDiff += 50;
+    //   }
+    //   if (_this.myMembers[i].member.type === 'Sibling') {
+    //     var memberElement = _this.myMembers[i].memberElement.get();
+    //   }
+    // }
   }
 
   family.prototype.moveElements = function() {
-    var self = myMembers.find(data => {
+    var self = this.myMembers.find(data => {
       return data.relation === 'self';
     });
     if (self) {
-      self.setAttribute('style',)
     }
   }
 
   function getTemplate() {
-    myElement = document.createElement('div');
-    myElement.setAttribute('style', 'width:500px;height:600px;border:1px solid gray;margin:10px; padding:20px;position:relative;');
+    myElement = new element('div').create().style('width:700px;height:700px;border:1px solid gray;margin:10px; padding:20px;position:relative;');
     return myElement;
   }
   return family;

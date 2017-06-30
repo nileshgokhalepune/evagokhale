@@ -1,20 +1,22 @@
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var element = require('../app/element').element;
 var pagehandler = (function() {
   var container;
-  return {
-    createContainer: function() {
-      // This will be the base component which will hold all othe components;
-      container = document.createElement('div');
-      container.setAttribute('width', '100%');
-      container.setAttribute('height', '100%');
-      container.setAttribute('style', 'background-color:silver');
-      document.body.appendChild(container);
-    },
-    addToContainer: function(element) {
-      if (typeof (element) === "string") {
-        container.innerHTML = container.innerHTML + element;
-      } else if (typeof (element) === "object") {
-        container.appendChild(element);
-      }
+  function pagehandler() {
+    this.container = new element('div').create().style('height:100%;width:100%;background-color:silver')
+  }
+
+  pagehandler.prototype.addToContainer = function(element) {
+    if (typeof (element) === "string") {
+      this.container.innerHTML = container.innerHTML + element;
+    } else if (typeof (element) === "object") {
+      this.container.get().appendChild(element);
     }
   }
+  return pagehandler;
 })();
+
+exports.pagehandler = pagehandler;
