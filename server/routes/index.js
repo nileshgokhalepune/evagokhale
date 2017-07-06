@@ -18,19 +18,19 @@ router.get('/users/:id', function(req, res, next) {
     family: [{
       name: 'Priti',
       id: 2,
-      relation: 'Mother',
+      relation: 'mother',
       type: 'Parent',
       imageUrl: '/assets/missin.gif'
     }, {
       name: 'Nilesh',
       id: 3,
-      relation: 'Father',
+      relation: 'father',
       type: 'Parent',
       imageUrl: '/assets/missin.gif'
     }, {
       name: 'Rishabh',
       id: 4,
-      relation: 'Brother',
+      relation: 'brother',
       type: 'Sibling',
       imageUrl: '/assets/missin.gif'
     }]
