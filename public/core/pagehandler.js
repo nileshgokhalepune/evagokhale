@@ -3,9 +3,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var element = require('../app/element').element;
+
 var pagehandler = (function() {
   var container;
   function pagehandler() {
+
     this.container = new element('div').create().style('height:100%;width:100%;background-color:silver')
   }
 
