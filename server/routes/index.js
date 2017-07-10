@@ -1,14 +1,18 @@
 var express = require('express');
-
 var router = express.Router();
+var path = require('path');
 
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   res.render('index', {
     title: 'Family Tree'
   });
 });
 
-router.get('/users/:id', function(req, res, next) {
+router.get('/html', function (req, res, next) {
+  res.sendfile(path.join(path.resolve('server/html') + '/google4e87ca70bfd7b2fc.html'));
+});
+
+router.get('/users/:id', function (req, res, next) {
   res.json({
     name: 'Eva',
     id: 1,
@@ -35,6 +39,10 @@ router.get('/users/:id', function(req, res, next) {
       imageUrl: '/assets/missin.gif'
     }]
   });
-})
+});
+
+router.get('/oauthcallback', function (req, res, next) {
+
+});
 
 module.exports = router;

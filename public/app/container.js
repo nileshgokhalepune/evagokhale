@@ -40,6 +40,7 @@ var container = (function () {
             transform: 'rotate(45deg)',
             'background-color': 'pink'
         });
+        
     }
     return container;
 }());
