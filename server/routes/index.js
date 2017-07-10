@@ -42,7 +42,7 @@ router.get('/users/:id', function (req, res, next) {
 });
 
 router.get('/oauthcallback', function (req, res, next) {
-
+  res.render(res);
 });
 
 module.exports = router;
