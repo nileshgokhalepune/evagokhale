@@ -1,4 +1,5 @@
 var express = require('express');
+var google = require('../libraries/google');
 var router = express.Router();
 var path = require('path');
 
@@ -8,8 +9,11 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.get('/html', function (req, res, next) {
-  res.sendfile(path.join(path.resolve('server/html') + '/google4e87ca70bfd7b2fc.html'));
+router.get('/google', function (req, res, next) {
+  var googleApi = new google.googleApi(function (url) {
+    res.redirect(url);
+  });
+  //res.sendfile(path.join(path.resolve('server/html') + '/google4e87ca70bfd7b2fc.html'));
 });
 
 router.get('/users/:id', function (req, res, next) {
@@ -42,6 +46,9 @@ router.get('/users/:id', function (req, res, next) {
 });
 
 router.get('/oauthcallback', function (req, res, next) {
+  var code = req.query.code;
+  var google = new google.googleApi();
+  google
   res.render(res);
 });
 

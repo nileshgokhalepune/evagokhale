@@ -8,14 +8,14 @@ exports.googleApi = (function () {
     var SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly'];
     var TOKEN_DIR = (process.env.HOME || process.env.HOMPATH || process.env.USERPROFILE) + '/.credentials/';
     var TOKEN_PATH = TOKEN_DIR + 'drive-nodejs-quickstart.json';
-
-    function googleApi() {
+    var googleRedirectUrl = "";
+    function googleApi(callback) {
         fs.readFile('client_secret.json', function processClientSecret(err, content) {
             if (err) {
                 console.log('Error loading client secret file:' + err);
                 return;
             }
-            authorize(JSON.parse(content), listFiles)
+            authorize(JSON.parse(content), callback)
         });
     }
 
@@ -42,6 +42,8 @@ exports.googleApi = (function () {
             access_type: 'offline',
             scope: SCOPES
         });
+        this.googleRedirectUrl = authUrl;
+        //callback(this.googleRedirectUrl);
         console.log('Authorize this app by visiting this url:', authUrl);
         var rl = readline.createInterface({
             input: process.stdin,

@@ -3,9 +3,6 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var request = require('request');
 var routes = require('./routes/index');
-var google = require('./libraries/google');
-
-var googleApi = new google.googleApi();
 
 var app = express();
 
