@@ -3,7 +3,8 @@ var google = require('../libraries/google');
 var googleApi = new google.googleApi();
 var router = express.Router();
 var path = require('path');
-
+var moment = require('moment');
+var authClient;
 router.get('/', function(req, res, next) {
   res.render('index', {
     title: 'Family Tree'
@@ -11,15 +12,35 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/google', function(req, res, next) {
-  googleApi.invoke(function(url) {
-    res.redirect(url);
+  googleApi.invoke(function(token, url) {
+    if (!token)
+      res.redirect(url);
+    else
+      res.redirect('/');
   })
-//res.sendfile(path.join(path.resolve('server/html') + '/google4e87ca70bfd7b2fc.html'));
 });
 
+router.get('/images', function(req, res, next) {
+  googleApi.listFiles(authClient);
+})
+
 router.get('/authenticate', function(req, res, next) {
+
   googleApi.invoke(function(oauthClient) {
-    debugger;
+    if (oauthClient) {
+      authClient = oauthClient;
+      var expirydate = new Date(oauthClient.credentials.expiry_date);
+      if (moment().add(5, 'd').isSameOrBefore(moment(expirydate))) {
+        googleApi.refresh(function() {
+          res.redirect('/');
+        })
+      }
+    } else {
+      res.redirect('/google');
+    }
+    res.json({
+      success: true
+    });
   });
 });
 

@@ -1,7 +1,9 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 var element = require('../app/element').element;
 var family = require('../app/family').family;
+var http = require('../servcies/baseservice').http;
 var container = (function () {
+    var client = new http();
     function container() {
         this.element = new element('container');
         this.containerElement = {};

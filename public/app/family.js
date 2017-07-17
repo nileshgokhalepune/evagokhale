@@ -15,8 +15,8 @@ var family = (function () {
                 position: 'absolute',
                 top: "15%",
                 left: "35%",
-                height: '600px',
-                width: '600px',
+                height: '50%',
+                width: '50%',
                 'background-color': 'red'
             }
         }

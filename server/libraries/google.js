@@ -23,6 +23,12 @@ exports.googleApi = (function() {
     });
   }
 
+  googleApi.prototype.refresh = function(callback) {
+    oauthclient.refreshAccessToken(function(err, tokens) {
+        
+    });
+  }
+
   function authorize(credentials, callback) {
     var clientSecret = credentials.web.client_secret;
     var clientId = credentials.web.client_id;
@@ -91,7 +97,7 @@ exports.googleApi = (function() {
     console.log('Token stored to ' + TOKEN_PATH);
   }
 
-  function listFiles(auth) {
+  googleApi.prototype.listFiles = function(auth) {
     var service = google.drive('v3');
     service.files.list({
       auth: auth,

@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var http = (function() {
   var jquery = $;
+  
   function http($) {
     this.jquery = $;
   }
