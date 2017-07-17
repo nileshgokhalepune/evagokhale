@@ -14,10 +14,10 @@ var family = (function () {
             style = {
                 position: 'absolute',
                 top: "15%",
-                left: "35%",
+                left: "25%",
                 height: '50%',
                 width: '50%',
-                'background-color': 'red'
+                'background-color': 'silver'
             }
         }
         this.element.create().style(style).attributes({

@@ -1,7 +1,8 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 var element = require('../app/element').element;
 var family = require('../app/family').family;
-var http = require('../servcies/baseservice').http;
+var http = require('../app/services/baseservice').http;
+
 var container = (function () {
     var client = new http();
     function container() {
@@ -13,7 +14,7 @@ var container = (function () {
         this.element.removeByTag('app');
         this.containerElement = this.element.create().style({
             position: 'absolute',
-            'background-color': 'green',
+            'background-color': 'white',
             width: '100%',
             height: '100vh',
             overflow: 'scroll'

@@ -1,5 +1,6 @@
 var container = require('../app/container').container;
-var httpService = require('./services/baseservice').http;
+var httpService = require('../app/services/baseservice').http;
+
 (function() {
   var http = new httpService();
   var base = new container();
