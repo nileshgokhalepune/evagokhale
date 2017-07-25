@@ -39,6 +39,7 @@
     "reflect-metadata": "^0.1.10",
     "request": "^2.81.0",
     "systemjs": "^0.20.15",
-    "zone.js": "^0.8.13"
+    "zone.js": "^0.8.13",
+    "jsonwebtoken": "7.4.1"
   }
 }

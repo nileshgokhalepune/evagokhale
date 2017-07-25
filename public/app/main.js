@@ -1,16 +1,6 @@
-var container = require('../app/container').container;
-var httpService = require('../app/services/baseservice').http;
+var container = require('./container').container;
+var myParser = require('./parser').parser;
 
-(function() {
-  var http = new httpService();
-  var base = new container();
-  http.get('/authenticate').then(function(res) {
-    if(!res.success){
+const app = new container();
 
-    }
-  })
-    .catch(function(error) {
-      debugger;
-    });
-  base.create();
-})(); //This file bootstraps the app. 
+myParser.parse("<div><span></span><input type='text' /><button class='btn btn-primary'><i class='fa fa-circle'></i></button></div>");

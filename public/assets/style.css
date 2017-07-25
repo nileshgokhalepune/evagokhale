@@ -1,53 +1,31 @@
-[type="member"], [type="member"] img{
-    width: 100px;
-    height:100px;
-    position: relative;
+[type="text"]{
+    border-radius: 20%;
+    border-color: silver;
 }
 
-.connector{
-    font-size: 18px;
-    font-weight: bold;
+.box-small{
+    width: 300px;
+    height: 300px;
+    background-color: silver;
+    border:1px solid thistle; 
+    margin: 2px;
+    padding: 4px;
+}
+
+.box-small div{
+    margin: 4px;
+}
+
+.center-box{
+    top:50%;
+    left:50%;
     position: absolute;
-    color: green;
 }
 
-.connector-left{
-    top:45%;
-    left:-5px;
+.header{
+    left: -10px;
+    width: 100%;
+    height: 30px;
+    background-color: #0077dd;
+    color:white;
 }
-
-
-.connector-right{
-    top:45%;
-    right:-5px;
-}
-
- .connector-top{
-     top:-5px;
-     left: 45%;
- }
-
- .connector-bottom{
-     bottom: -5px;
-     left: 45%;
- }
-
- .memberHover{
-     transform: scale(1.5);
-     z-index: 9999;
-     box-shadow: 10px;
- }
-
- .menu  {
-     position: absolute;
-     background-color: gray;
-     box-shadow: 10px;
-     color:red;
- }
-
- .menu ul li{
-     display: inline-block;
-     text-decoration: none;
-     list-style: none;
-     left:0px;
- }

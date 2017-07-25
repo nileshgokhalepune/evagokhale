@@ -1,51 +1,42 @@
-Object.defineProperty(exports, '__esModule', { value: true });
-var element = require('../app/element').element;
-var family = require('../app/family').family;
-var http = require('../app/services/baseservice').http;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-var container = (function () {
-    var client = new http();
-    function container() {
-        this.element = new element('container');
-        this.containerElement = {};
+var http = require('./services/http').http;
+var factory = require('./component').componentFactory;
+var component = require('./component').component;
+var login = require('./login').login;
+var container = (function() {
+    //This should hold all the families that are loaded.
+  function container() {
+    this.component = component({ selector:'app', template:`<div></div>`});
+  }
+
+  function component(parms) {
+    var element = document.createElement(parms.selector);
+    if (parms.templateUrl) {
+      http.get(parms.templateUrl).then(data => {
+        element.innerHTML = data;
+      });
     }
-
-    container.prototype.create = function () {
-        this.element.removeByTag('app');
-        this.containerElement = this.element.create().style({
-            position: 'absolute',
-            'background-color': 'white',
-            width: '100%',
-            height: '100vh',
-            overflow: 'scroll'
-        });
-        var mainUserFamily = new family("eva");
-        mainUserFamily.create();
-
-        var userTopLeft = new family("evaphototopleft");
-        userTopLeft.create({
-            top: "45px",
-            left: "150px",
-            height: "200px",
-            width: "200px",
-            position: 'absolute',
-            transform: 'rotate(45deg)',
-            'background-color': 'pink'
-        });
-
-        var userTopRight = new family('evaphototopright');
-        userTopRight.create({
-            top: "45px",
-            right: "150px",
-            height: "200px",
-            width: "200px",
-            position: 'absolute',
-            transform: 'rotate(45deg)',
-            'background-color': 'pink'
-        });
-        
+    if (parms.template) {
+      element.innerHTML = parms.template;
     }
-    return container;
-}());
+    return {
+      element: element,
+      moduleId: Math.random()
+    };
+  } 
+
+  container.prototype.session = function() {
+    http.get('/valid').then(data => {
+      if (!data.success) {
+        var loginElement = factory.call(login);
+      }
+    })
+  }
+
+  return container;
+}()); 
 
 exports.container = container;

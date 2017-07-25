@@ -3,9 +3,12 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var request = require('request');
 var routes = require('./routes/index');
+var jwt = require('jsonwebtoken');
+var config = require('./libraries/config');
 
 var app = express();
 
+app.set('supersecret',config.secret);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -18,6 +21,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, '../', 'public')));
 app.use(express.static(path.join(__dirname, '../', 'node_modules')));
+
 // mongoose.connect(database.url);
 // var db = mongoose.connection;
 
