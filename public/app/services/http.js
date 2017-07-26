@@ -5,9 +5,10 @@ var http = (function() {
   function http() {
   }
 
-  http.prototype.get = function(url, data, options) {
+  http.prototype.get = function(url, options) {
     return new Promise((resolve, reject) => {
       $.ajax({
+        async: options && options.async ? options.async : false,
         url: url,
         mehtod: 'GET',
         success: function(data) {
