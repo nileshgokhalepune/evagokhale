@@ -22,11 +22,19 @@ router.get('/valid', function(req, res, next) {
 
 router.post('/authenticate', function(req, res, next) {
   if (req.body.userId && req.body.password) {
-    return "youareonyourway";
+    res.header('token', "randomstring");
+    res.json("youareonyourway");
   } else {
-    throw "Not happening";
+    res.send(500, "Not happening");
   }
 })
+
+router.get('/user', function(req, res, next) {
+  res.json({
+    userName: 'Nilesh',
+    id: '1'
+  });
+});
 
 router.post('/login', function(req, res, next) {});
 
