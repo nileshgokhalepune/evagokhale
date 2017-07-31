@@ -16,10 +16,15 @@ html
     script(src="/systemjs/dist/system.src.js")
     script(src="/zone.js/dist/zone.js")
     script(src="/bootstrap/dist/js/bootstrap.js")
+    script(src="/app/http.js")
+    script(src="/app/utils.js")
+    script(src="/app/config.js")
+    script(src="/app/main.js")
+    script(src="/app/controllers.js")
     //- script(src="/core/pagehandler.js")
     //- script(src="/app/container.js")
     <!-- 2. Configure SystemJS -->
-    script(src="/systemjs.config.js")
-    script System.import('app').catch(function (err) {console.error(err); });
+    //- script(src="/systemjs.config.js")
+    //- script System.import('app').catch(function (err) {console.error(err); });
   body(class="container-fluid")
     block content

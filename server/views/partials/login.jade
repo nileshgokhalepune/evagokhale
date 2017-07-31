@@ -1,9 +1,9 @@
 div(class="form-group box-small")
     div
         label UserName
-        input(type="text",class="form-control")
+        input(type="text",class="form-control",id="userName")
         label Pasword
-        input(type="password",class="form-control")
-        button(class="btn btn-success" onclick="login.authenticate()") Login
+        input(type="password",class="form-control",id="password")
+        button(class="btn btn-success" onclick="controllers.login.authenticate()") Login
     div
         button(class="btn btn-primary",onclick="") #[i(class="fa fa-google-plus")]

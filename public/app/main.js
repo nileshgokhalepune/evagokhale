@@ -1,6 +1,9 @@
-var container = require('./container').container;
-var myParser = require('./parser').parser;
+var controllers = {};
 
-const app = new container();
-
-// myParser.parse("<div><span></span><input type='text' /><button class='btn btn-primary'><i class='fa fa-circle'></i></button></div>");
+window.onload = function() {
+  //fireup app on load.
+  console.log(config);
+  if (controllers.container) {
+    controllers.container.init();
+  }
+}

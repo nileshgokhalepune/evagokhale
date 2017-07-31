@@ -19,7 +19,14 @@ router.get('/valid', function(req, res, next) {
     })
   }
 });
- 
+
+router.post('/authenticate', function(req, res, next) {
+  if (req.body.userId && req.body.password) {
+    return "youareonyourway";
+  } else {
+    throw "Not happening";
+  }
+})
 
 router.post('/login', function(req, res, next) {});
 
