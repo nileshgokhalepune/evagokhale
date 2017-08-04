@@ -18,8 +18,7 @@ controllers.home = (function() {
     this.renderUser();
   }
 
-  home.prototype.renderUser = function() {
-    this.http.get('/user',)
+  home.prototype.renderUser = function() { 
     var mainMember = new controllers.member(config, 1);
     this.userCollection.push(mainMember);
     //get other family members of this user and render them.    

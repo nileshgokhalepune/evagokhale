@@ -29,32 +29,67 @@ router.post('/authenticate', function(req, res, next) {
   }
 })
 
-router.get('/user', function(req, res, next) {
-  res.json({
-    userName: 'Nilesh',
-    id: '1',
-    imgUrl: '/assets/missin.gif',
-    relation:'self'
-  });
+router.get('/user/:id', function(req, res, next) {
+  var user = users.find(f => f.id === req.params.id);
+  res.json(user);
 });
 
-router.get('/family', function(req, res, next) {
-  var familymembers = [{
-    userName: 'Priti',
-    id: '2',
-    imgUrl: '/assets/missin.gif',
-    relation: 'spouse'
-  },
-    {
-      userName: 'Eva',
-      id: '2',
-      imgUrl: '/assets/missin.gif',
-      relation: 'daughter',
-      type: 'child'
-    }];
+router.get('/family/:userId', function(req, res, next) {
+  var relatives = relations.find((element, index) => element.id == req.params.userId);
+  var familymembers = [];
+  for (var rel in relatives) {
+    var user = users.find(f => f.id === rel.relId);
+    if (user) {
+      familymembers.push(user);
+      user = null;
+    }
+  }
   res.json(familymembers);
 });
 
 router.post('/login', function(req, res, next) {});
 
 module.exports = router;
+
+var users = [{
+  userName: 'Nilesh',
+  id: '1',
+  imgUrl: '/assets/missin.gif',
+  relation: 'self'
+}, {
+  userName: 'Priti',
+  id: '2',
+  imgUrl: '/assets/missin.gif',
+  relation: 'spouse'
+}, {
+  userName: 'Eva',
+  id: '2',
+  imgUrl: '/assets/missin.gif',
+  relation: 'daughter',
+  type: 'child'
+}];
+
+var relations = [{
+  id: 1,
+  relId: 2
+},
+  {
+    id: 1,
+    relId: 3
+  },
+  {
+    id: 2,
+    relId: 1
+  },
+  {
+    id: 2,
+    relId: 3
+  },
+  {
+    id: 3,
+    relId: 1
+  },
+  {
+    id: 3,
+    relId: 2
+  }]

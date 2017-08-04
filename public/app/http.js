@@ -11,7 +11,7 @@ var http = (function() {
           resolve(data)
         },
         error: function(error) {
-          reject(data);
+          reject(error);
         }
       })
     })
