@@ -14,6 +14,7 @@ controllers.container = (function() {
       })
     }
     this.render();
+    utils.router('home', {});
   },
   container.prototype.render = function() {
     this.utils.render('page-content',

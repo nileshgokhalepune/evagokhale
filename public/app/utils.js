@@ -5,7 +5,7 @@ var utils = (function() {
       var temp = route.split('?');
       var controllerToInvoke = temp[0];
       location.hash = route;
-      controllers[controllerToInvoke].newup().init();
+      controllers.newup(controllerToInvoke);
     },
     render: function(elementId, content, append) {
       var element = document.getElementById(elementId);
@@ -22,10 +22,14 @@ var utils = (function() {
     },
     bind: function(obj, html) {
       if (typeof obj === "object") {
-        if (obj.hasOwnProperties()) {
-
+        for (var key in obj) {
+          var index = html.indexOf('{{' + key + '}}')
+          if (index !== -1) {
+            html = html.replace('{{' + key + '}}', obj[key]);
+          }
         }
       }
+      return html;
     },
     isvalid: function() {
       if (localStorage.getItem('token')) {

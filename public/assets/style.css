@@ -29,3 +29,25 @@
     background-color: #0077dd;
     color:white;
 }
+
+[type="member"] {
+    width: 150px;
+    height:150px;
+    border-radius: 50%;
+    border :1px solid silver;
+    position: relative;
+}
+
+[type="member"]:hover {
+    border :5px outset blue;
+    cursor: pointer;
+}
+
+[type="member"] img {
+    top:0;
+    left: 0;
+    width: 140px;
+    height:140px;
+    border-radius: 50%;
+    position: absolute;
+}

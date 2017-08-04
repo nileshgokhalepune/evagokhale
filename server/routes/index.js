@@ -32,8 +32,27 @@ router.post('/authenticate', function(req, res, next) {
 router.get('/user', function(req, res, next) {
   res.json({
     userName: 'Nilesh',
-    id: '1'
+    id: '1',
+    imgUrl: '/assets/missin.gif',
+    relation:'self'
   });
+});
+
+router.get('/family', function(req, res, next) {
+  var familymembers = [{
+    userName: 'Priti',
+    id: '2',
+    imgUrl: '/assets/missin.gif',
+    relation: 'spouse'
+  },
+    {
+      userName: 'Eva',
+      id: '2',
+      imgUrl: '/assets/missin.gif',
+      relation: 'daughter',
+      type: 'child'
+    }];
+  res.json(familymembers);
 });
 
 router.post('/login', function(req, res, next) {});

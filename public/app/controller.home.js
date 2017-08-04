@@ -11,17 +11,28 @@ controllers.home = (function() {
     this.http.get('/partials/home').then(data => {
       this.myHtml = data;
       this.render();
-      this.renderUser();
     });
   }
   home.prototype.render = function() {
     this.utils.render('routes', this.myHtml);
+    this.renderUser();
   }
 
   home.prototype.renderUser = function() {
-    var mainMember = new controllers.member(config);
+    this.http.get('/user',)
+    var mainMember = new controllers.member(config, 1);
     this.userCollection.push(mainMember);
-    this.utils.render('userData', mainMember.myHtml);
+    //get other family members of this user and render them.    
+    this.http.get('/family/' + 1).then(data => {
+      if (data) {
+        for (var member in data) {
+          var m = new controllers.member(config);
+          this.userCollection.push(m);
+        }
+      }
+    }).catch(error => {
+      console.log(error)
+    });
   }
 
   return home;
