@@ -16,7 +16,7 @@ controllers.member = (function() {
     if (!this.userData) {
       action = this.http.get('/user/' + this.userId);
     } else {
-      action = Promise.resolve(v => v);
+      action = Promise.resolve(this.userData);
     }
     action.then(data => {
       this.userData = data;

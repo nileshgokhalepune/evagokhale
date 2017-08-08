@@ -39,9 +39,13 @@ router.get('/family/:userId', function(req, res, next) {
   if (user) {
     var family = [];
     for (var r of user.relations) {
-      var member = users.find((e, i) => e.id = r.relId);
+      var member = users.find((e, i) => e.id == r.relId);
       if (member) {
-        family.push(member);
+        family.push({
+          member: member,
+          type: r.type,
+          relation: r.relation
+        });
       }
     }
     res.json(family);

@@ -1,7 +1,7 @@
 controllers.home = (function() {
   function home(config) {
     this.myHtml;
-
+    this.mainMember = null;
     this.utils = config.utils;
     this.http = config.http;
     this.init();
@@ -18,23 +18,24 @@ controllers.home = (function() {
   }
 
   home.prototype.renderUser = function() {
-    var mainMember = new controllers.member(config, 1, null);
+    this.mainMember = new controllers.member(config, 1, null);
 
     //get other family members of this user and render them.    
     this.http.get('/family/' + 1).then(data => {
       if (data) {
         for (var member of data) {
           var m = new controllers.member(config, member.id, member);
-          mainMember.relations.push(m);
+          this.mainMember.relations.push(m);
         }
       }
+      this.arrange();
     }).catch(error => {
       console.log(error)
     });
   }
 
   home.prototype.arrange = function() {
-    for (var m in member.relations) {
+    for (var m of this.mainMember.relations) {
       var strategy = placementStrategy(m);
       strategy.move();
     }
@@ -74,7 +75,7 @@ var topStrategy = (function() {
   }
 
   return topStrategy
-}(member));
+}());
 
 var leftStrategy = (function(member) {
   function leftStrategy(member) {
@@ -85,7 +86,7 @@ var leftStrategy = (function(member) {
     utils.move('left', 'center', siblings);
   }
 
-}(member))
+}())
 
 var rightStrategy = (function() {
   function rightStrategy(member) {
@@ -96,7 +97,7 @@ var rightStrategy = (function() {
     utils.move('right', 'center', friends);
   }
   return rightStrategy;
-}(member))
+}())
 
 var bottomStrategy = (function() {
   function bottomStrategy(member) {
@@ -109,4 +110,4 @@ var bottomStrategy = (function() {
   }
 
   return bottomStrategy;
-}(member))
+}())
