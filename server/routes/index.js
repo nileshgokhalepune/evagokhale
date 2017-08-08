@@ -35,16 +35,19 @@ router.get('/user/:id', function(req, res, next) {
 });
 
 router.get('/family/:userId', function(req, res, next) {
-  var relatives = relations.filter((element, index) => element.id == req.params.userId);
-  var familymembers = [];
-  for (var rel of relatives) {
-    var user = users.find((element, index) => element.id == rel.relId);
-    if (user) {
-      familymembers.push(user);
-      user = null;
+  var user = users.find((e, i) => e.id == req.params.userId);
+  if (user) {
+    var family = [];
+    for (var r of user.relations) {
+      var member = users.find((e, i) => e.id = r.relId);
+      if (member) {
+        family.push(member);
+      }
     }
+    res.json(family);
+  } else {
+    res.sendStatus(404);
   }
-  res.json(familymembers);
 });
 
 router.post('/login', function(req, res, next) {});
@@ -55,42 +58,111 @@ var users = [{
   userName: 'Nilesh',
   id: '1',
   imgUrl: '/assets/missin.gif',
-  relation: 'self'
-}, {
-  userName: 'Priti',
-  id: '2',
-  imgUrl: '/assets/missin.gif',
-  relation: 'spouse'
-}, {
-  userName: 'Eva',
-  id: '3',
-  imgUrl: '/assets/missin.gif',
-  relation: 'daughter',
-  type: 'child'
-}];
+  type: 'self',
+  relations: [{
+    id: 1,
+    relId: 2,
+    relation: 'wife',
+    type: 'spouse'
+  },
+    {
+      id: 1,
+      relId: 3,
+      relation: 'daughter',
+      type: 'child'
+    },
+    {
+      id: 1,
+      relId: 4,
+      relation: 'son',
+      type: 'child'
+    }, {
+      id: 1,
+      relId: 5,
+      relation: 'sister',
+    }]
+},
+  {
+    userName: 'Priti',
+    id: '2',
+    imgUrl: '/assets/missin.gif',
+    type: 'self',
+    relations: [{
+      id: 2,
+      relId: 1,
+      relation: 'husband',
+      type: 'spouse'
+    },
+      {
+        id: 2,
+        relId: 3,
+        relation: 'daughter',
+        type: 'child'
+      },
+      {
+        id: 2,
+        relId: 4,
+        relation: 'son',
+        type: 'child'
+      }]
+  },
+  {
+    userName: 'Eva',
+    id: '3',
+    imgUrl: '/assets/missin.gif',
+    type: 'self',
+    relations: [{
+      id: 3,
+      relId: 1,
+      relation: 'father',
+      type: 'parent'
+    },
+      {
+        id: 3,
+        relId: 2,
+        relation: 'mother',
+        type: 'parent'
+      },
+      {
+        id: 3,
+        relId: 4,
+        relation: 'brother',
+        type: 'sibling'
+      }]
+  },
+  {
+    userName: 'Rishabh',
+    id: '4',
+    imgUrl: '/assets/missin.gif',
+    relations: [{
+      id: 4,
+      relId: 1,
+      relation: 'father',
+      type: 'parent'
+    }, {
+      id: 4,
+      relId: 2,
+      relation: 'mother',
+      type: 'parent'
+    }, {
+      id: 4,
+      relId: 3,
+      relation: 'sister',
+      type: 'sibling'
+    }]
+  },
+  {
+    userName: 'Saima',
+    id: '5',
+    imgUrl: '/assets/missin.gif',
+    relations: [
+      {
+        id: 5,
+        relId: 1,
+        relation: 'brother',
+        type: 'sibling'
+      }]
+  }
+];
 
-var relations = [
-  {
-    id: 1,
-    relId: 2
-  },
-  {
-    id: 1,
-    relId: 3
-  },
-  {
-    id: 2,
-    relId: 1
-  },
-  {
-    id: 2,
-    relId: 3
-  },
-  {
-    id: 3,
-    relId: 1
-  },
-  {
-    id: 3,
-    relId: 2
-  }]
+var relations = []
