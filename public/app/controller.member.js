@@ -1,11 +1,11 @@
 controllers.member = (function() {
   function member(config, userId) {
     this.userId = userId;
-    this.userData = userData;
     this.imageUrl = null;
     this.myHtml = null;
     this.utils = config.utils;
     this.http = config.http;
+    this.relations = [];
     this.init();
   }
   member.prototype.init = function() {
@@ -21,7 +21,7 @@ controllers.member = (function() {
   }
 
   member.prototype.render = function() {
-    utils.render('userData', this.myHtml, true);
+    utils.render('center', this.myHtml, true);
   }
 
   member.prototype.position = function(where) {}

@@ -35,10 +35,10 @@ router.get('/user/:id', function(req, res, next) {
 });
 
 router.get('/family/:userId', function(req, res, next) {
-  var relatives = relations.find((element, index) => element.id == req.params.userId);
+  var relatives = relations.filter((element, index) => element.id == req.params.userId);
   var familymembers = [];
-  for (var rel in relatives) {
-    var user = users.find(f => f.id === rel.relId);
+  for (var rel of relatives) {
+    var user = users.find((element, index) => element.id == rel.relId);
     if (user) {
       familymembers.push(user);
       user = null;
@@ -63,16 +63,17 @@ var users = [{
   relation: 'spouse'
 }, {
   userName: 'Eva',
-  id: '2',
+  id: '3',
   imgUrl: '/assets/missin.gif',
   relation: 'daughter',
   type: 'child'
 }];
 
-var relations = [{
-  id: 1,
-  relId: 2
-},
+var relations = [
+  {
+    id: 1,
+    relId: 2
+  },
   {
     id: 1,
     relId: 3
