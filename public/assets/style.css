@@ -31,83 +31,86 @@
 }
 
 [type="member"] {
-    width: 150px;
-    height:150px;
+    width: 100px;
+    height:100px;
     border-radius: 50%;
     border :1px solid silver;
     position: relative;
+    margin: 0 auto;
 }
 
 [type="member"]:hover {
-    border :5px outset blue;
+    border :1px inset blue;
     cursor: pointer;
 }
 
 [type="member"] img {
     top:0;
     left: 0;
-    width: 140px;
-    height:140px;
+    width: 100px;
+    height:100px;
     border-radius: 50%;
     position: absolute;
+    transition: width 100s;
+    transition-timing-function: ease-in();
 }
 
 #top{
-    width:200px;
+    width:400px;
     height: 200px;
-    top:0;
-    left: 200px;
+    left:400px;
     position: absolute;
-    display: inline-flex;
-    flex-flow: row;
-    transition: top 10s;
-    border: 1px solid silver;
-}
-
-#bottom{
-    width:200px;
-    height: 200px;
-    left: 200px;
-    position: absolute;
-    display: inline-flex;
-    flex-flow: row;
-    border: 1px solid silver;
-}
-
-#left{
-    height: 200px;
-    width:200px;
-    left:0;
-    top:200px;
-    position: absolute;
-    display: inline-flex;
-    flex-flow: row;
-    border: 1px solid silver; 
-}
-
-#right{
-    height:200px;
-    width: 200px;
-    top:200px;
-    position:relative;
-    display: inline-flex;
-    flex-flow: row;
-    border: 1px solid silver; 
+    display:inline-flex;
+    flex-flow: row; 
+    flex-grow: inherit;
+    -ms-flex-flow: row;
+    text-align: center;
+    border-bottom: 1px solid silver; 
 }
 
 #center{
-    height: 200px;
-    width: 200px;
-    left: 200px;
-    right: auto;
+    width:400px;
+    height:200px;
+    left:400px;
     top:200px;
-    bottom: auto;
+    position: absolute;
+    border:1px solid green;
+     display:inline-flex;
+    flex-flow: row;  
+}
+
+#left{
+    width:400px;
+    top:200px;
+    height: 200px;
+    left: 0;
+    border-right: 1px solid silver;
     position: absolute;
     display: inline-flex;
     flex-flow: row;
-    border: 1px solid silver;
+    border-right: 1px solid magenta;
 }
 
+#right{
+    top:200px;
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    display: inline-flex;
+    flex-flow: row;
+    left: 800px;
+    border-left: 1px solid blue; 
+}
+
+#bottom{
+    top:400px;
+    left:400px;
+    width: 400px;
+    display: inline-flex;
+    flex-flow: row;
+    position: absolute;
+    border-top: 1px solid red; 
+}
 .home{
     position: relative;
     width: 100%;
