@@ -18,34 +18,47 @@ controllers.home = (function() {
   }
 
   home.prototype.renderUser = function() {
+    var _this = this;
     this.mainMember = new controllers.member(config, 1, null);
-
-    //get other family members of this user and render them.    
-    this.http.get('/family/' + 1).then(data => {
-      if (data) {
-        for (var member of data) {
-          var m = new controllers.member(config, member.id, member);
-          this.mainMember.relations.push(m);
+    this.mainMember.init().then(data => {
+      var promises = [];
+      _this.http.get('/family/' + 1).then(data => {
+        if (data) {
+          for (var member of data) {
+            var m = new controllers.member(config, member.id, member.member);
+            promises.push(m.init());
+            this.mainMember.relations.push({
+              member: m,
+              type: member.type,
+              relation: member.relation
+            });
+          }
+          Promise.all(promises).then(d => {
+            _this.arrange();
+          })
         }
-      }
-      this.arrange();
+      }).catch(error => {
+        console.log(error)
+      });
     }).catch(error => {
-      console.log(error)
-    });
+      console.log(error);
+    })
+    //get other family members of this user and render them.    
+
   }
 
   home.prototype.arrange = function() {
     for (var m of this.mainMember.relations) {
-      var strategy = placementStrategy(m);
-      strategy.move();
+      var strategy = placementStrategy(m.type, m.member);
+      if (strategy) strategy.move();
     }
   }
 
   return home;
 }(config));
 
-var placementStrategy = function(member) {
-  switch (member.type) {
+var placementStrategy = function(type, member) {
+  switch (type) {
     case "spouse": {
       break;
     }
@@ -70,8 +83,8 @@ var topStrategy = (function() {
   }
 
   topStrategy.prototype.move = function() {
-    var parents = member.relations.filter((m, i) => m.relation === 'parent');
-    utils.move('top', 'center', parents);
+    var parents = this.member.relations.filter((m, i) => m.relation === 'parent');
+    this.member.hop('top');
   }
 
   return topStrategy
@@ -82,10 +95,10 @@ var leftStrategy = (function(member) {
     this.member = member;
   }
   leftStrategy.prototype.move = function() {
-    var siblings = member.relations.filter((m, i) => m.relation === 'sibling');
-    utils.move('left', 'center', siblings);
+    var siblings = this.member.relations.filter((m, i) => m.relation === 'sibling');
+    this.member.hop('left');
   }
-
+return leftStrategy;
 }())
 
 var rightStrategy = (function() {
@@ -93,8 +106,8 @@ var rightStrategy = (function() {
     this.member = member;
   }
   rightStrategy.prototype.move = function() {
-    var friends = member.relations.filter((m, i) => m.relation === 'friend');
-    utils.move('right', 'center', friends);
+    var friends = this.member.relations.filter((m, i) => m.relation === 'friend');
+    this.member.hop('right');
   }
   return rightStrategy;
 }())
@@ -105,8 +118,8 @@ var bottomStrategy = (function() {
   }
 
   bottomStrategy.prototype.move = function() {
-    var children = member.relations.filter((m, i) => m.relation === 'child');
-    utils.move('right', 'center', children);
+    //var children = this.member.relations.filter((m, i) => m.relation === 'child');
+    this.member.hop('bottom');
   }
 
   return bottomStrategy;

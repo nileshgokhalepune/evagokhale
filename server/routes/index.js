@@ -83,7 +83,23 @@ var users = [{
     }, {
       id: 1,
       relId: 5,
+      type: 'sibling',
       relation: 'sister',
+    }, {
+      id: 1,
+      relId: 6,
+      type: 'friend',
+      relation: 'friend',
+    }, {
+      id: 1,
+      relId: 7,
+      type: 'parent',
+      relation: 'father',
+    }, {
+      id: 1,
+      relId: 8,
+      type: 'parent',
+      relation: 'mother',
     }]
 },
   {
@@ -156,6 +172,42 @@ var users = [{
     }]
   },
   {
+    userName: 'Shripad',
+    id: '7',
+    imgUrl: '/assets/missin.gif',
+    relations: [
+      {
+        id: 7,
+        relId: 1,
+        relation: 'son',
+        type: 'child'
+      },
+      {
+        id: 7,
+        relId: 5,
+        relation: 'daughter',
+        type: 'child'
+      }]
+  },
+  {
+    userName: 'Janhavi',
+    id: '8',
+    imgUrl: '/assets/missin.gif',
+    relations: [
+      {
+        id: 8,
+        relId: 1,
+        relation: 'son',
+        type: 'child'
+      },
+      {
+        id: 8,
+        relId: 5,
+        relation: 'daughter',
+        type: 'child'
+      }]
+  },
+  {
     userName: 'Saima',
     id: '5',
     imgUrl: '/assets/missin.gif',
@@ -165,6 +217,18 @@ var users = [{
         relId: 1,
         relation: 'brother',
         type: 'sibling'
+      }]
+  },
+  {
+    userName: 'Siraj',
+    id: '6',
+    imgUrl: '/assets/missin.gif',
+    relations: [
+      {
+        id: 6,
+        relId: 1,
+        relation: 'friend',
+        type: 'friend'
       }]
   }
 ];

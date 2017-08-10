@@ -41,8 +41,12 @@ var utils = (function() {
     set: function() {
       localStorage.setItem('token', 'randomtoken');
     },
-    moveChildren: function(target, source) {
-      
+    move: function(who, target) {
+      if(who && target){
+        var element = document.getElementById(who);
+        var targetElement = document.getElementById(target);
+        targetElement.appendChild(element);
+      }
     }
   }
 }());

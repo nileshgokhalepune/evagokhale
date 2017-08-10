@@ -5,32 +5,44 @@ controllers.member = (function() {
       this.userData = userData;
     }
     this.imageUrl = null;
+    this.currentLocation = '';
     this.myHtml = null;
     this.utils = config.utils;
     this.http = config.http;
     this.relations = [];
-    this.init();
   }
   member.prototype.init = function() {
-    var action;
-    if (!this.userData) {
-      action = this.http.get('/user/' + this.userId);
-    } else {
-      action = Promise.resolve(this.userData);
-    }
-    action.then(data => {
-      this.userData = data;
-      this.http.get('/partials/member').then(data => {
-        this.myHtml = utils.bind(this.userData, data);
-        this.render()
-      }).catch(error => error);
-    }).catch(error => {
-      console.log(error);
+    return new Promise((resolve, reject) => {
+      var action;
+      if (!this.userData) {
+        action = this.http.get('/user/' + this.userId);
+      } else {
+        action = Promise.resolve(this.userData);
+      }
+      action.then(data => {
+        this.userData = data;
+        this.http.get('/partials/member').then(data => {
+          this.myHtml = utils.bind(this.userData, data);
+          this.render()
+          resolve(true);
+        }).catch(error => {
+          console.log(error);
+          reject(error);
+        });
+      }).catch(error => {
+        reject(error);
+        console.log(error);
+      });
+
     });
   }
 
+  member.prototype.hop = function(target) {
+    utils.move(this.userData.id, target);
+  }
 
   member.prototype.render = function() {
+    this.currentLocation = 'center';
     utils.render('center', this.myHtml, true);
   }
 
