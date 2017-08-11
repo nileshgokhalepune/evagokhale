@@ -20,7 +20,10 @@ controllers.container = (function() {
     this.utils.render('page-content',
       `
                 <div class="container-fluid">
-                    <div class="header">Main</div>
+                    <div class="header">
+                      <div class="menu">Invite</div>
+                    </div>
+                    
                     <div id="routes"></div>
                 </div>
             `

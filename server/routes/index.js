@@ -4,6 +4,7 @@ var googleApi = new google.googleApi();
 var router = express.Router();
 var path = require('path');
 var moment = require('moment');
+var fs = require('fs');
 
 router.get('/', function(req, res, next) {
   res.render('index', {
@@ -56,7 +57,12 @@ router.get('/family/:userId', function(req, res, next) {
 
 router.get('/image/:userId/:id', function(req, res, next) {
   if (req.params.userId && req.params.id) {
-    res.sendfile(path.join(__dirname, '../images/', req.params.userId + '/' + req.params.id));
+    var defaultPath = '/assets/missing.gif'
+    var finalPath = path.join(__dirname, '../images/', req.params.userId + '/' + req.params.id); 
+    if (!fs.existsSync(finalPath)) {
+      finalPath = path.join(__dirname, '../../public/assets/missin.gif');
+    }
+    res.sendfile(finalPath);
   } else {
     res.sendStatus(404);
   }
@@ -113,7 +119,7 @@ var users = [{
   {
     userName: 'Priti',
     id: '2',
-    imgUrl: '/assets/missin.gif',
+    imgUrl: '/image/2/1.jpg',
     type: 'self',
     relations: [{
       id: 2,
@@ -161,7 +167,7 @@ var users = [{
   {
     userName: 'Rishabh',
     id: '4',
-    imgUrl: '/assets/missin.gif',
+    imgUrl: '/image/4/1.jpg',
     relations: [{
       id: 4,
       relId: 1,
@@ -182,7 +188,7 @@ var users = [{
   {
     userName: 'Shripad',
     id: '7',
-    imgUrl: '/assets/missin.gif',
+    imgUrl: '/image/7/1.jpg',
     relations: [
       {
         id: 7,
@@ -200,7 +206,7 @@ var users = [{
   {
     userName: 'Janhavi',
     id: '8',
-    imgUrl: '/assets/missin.gif',
+    imgUrl: '/image/8/1.jpg',
     relations: [
       {
         id: 8,
@@ -218,7 +224,7 @@ var users = [{
   {
     userName: 'Saima',
     id: '5',
-    imgUrl: '/assets/missin.gif',
+    imgUrl: '/image/5/1.jpg',
     relations: [
       {
         id: 5,
@@ -230,7 +236,7 @@ var users = [{
   {
     userName: 'Siraj',
     id: '6',
-    imgUrl: '/assets/missin.gif',
+    imgUrl: '/image/6/1.jpg',
     relations: [
       {
         id: 6,
