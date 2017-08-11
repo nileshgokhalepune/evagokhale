@@ -66,6 +66,7 @@
     -ms-flex-flow: row;
     text-align: center;
     border-bottom: 1px solid silver; 
+    vertical-align: middle;
 }
 
 #center{

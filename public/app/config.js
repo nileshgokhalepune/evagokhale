@@ -1,5 +1,6 @@
 //all dependencies
 var config = {
   http: http,
-  utils: utils
+  utils: utils,
+  svg: svg
 };

@@ -17,6 +17,12 @@ var utils = (function() {
         }
       }
     },
+    renderNs: function(elementId, content, append) {
+      var element = document.getElementById(elementId);
+      if (element) {
+
+      }
+    },
     field: function(id) {
       return document.getElementById(id);
     },
@@ -42,7 +48,7 @@ var utils = (function() {
       localStorage.setItem('token', 'randomtoken');
     },
     move: function(who, target) {
-      if(who && target){
+      if (who && target) {
         var element = document.getElementById(who);
         var targetElement = document.getElementById(target);
         targetElement.appendChild(element);

@@ -14,8 +14,11 @@ controllers.home = (function() {
   }
   home.prototype.render = function() {
     this.utils.render('routes', this.myHtml);
+    this.renderCanvas();
     this.renderUser();
   }
+
+  home.prototype.renderCanvas = function() {}
 
   home.prototype.renderUser = function() {
     var _this = this;
@@ -35,7 +38,12 @@ controllers.home = (function() {
           }
           Promise.all(promises).then(d => {
             _this.arrange();
-          })
+            // svg = new svg();
+            // for (var m of this.mainMember.relations) {
+            //   svg.drawLine(this.mainMember.userData.id, m.member.userData.id);
+            // }
+            // svg.append('routes');
+          });
         }
       }).catch(error => {
         console.log(error)
@@ -98,7 +106,7 @@ var leftStrategy = (function(member) {
     var siblings = this.member.relations.filter((m, i) => m.relation === 'sibling');
     this.member.hop('left');
   }
-return leftStrategy;
+  return leftStrategy;
 }())
 
 var rightStrategy = (function() {

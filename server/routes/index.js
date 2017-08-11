@@ -54,6 +54,14 @@ router.get('/family/:userId', function(req, res, next) {
   }
 });
 
+router.get('/image/:userId/:id', function(req, res, next) {
+  if (req.params.userId && req.params.id) {
+    res.sendfile(path.join(__dirname, '../images/', req.params.userId + '/' + req.params.id));
+  } else {
+    res.sendStatus(404);
+  }
+});
+
 router.post('/login', function(req, res, next) {});
 
 module.exports = router;
@@ -61,7 +69,7 @@ module.exports = router;
 var users = [{
   userName: 'Nilesh',
   id: '1',
-  imgUrl: '/assets/missin.gif',
+  imgUrl: '/image/1/1.jpg',
   type: 'self',
   relations: [{
     id: 1,
@@ -129,7 +137,7 @@ var users = [{
   {
     userName: 'Eva',
     id: '3',
-    imgUrl: '/assets/missin.gif',
+    imgUrl: '/image/3/1.jpg',
     type: 'self',
     relations: [{
       id: 3,
