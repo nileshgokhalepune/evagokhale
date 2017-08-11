@@ -26,16 +26,45 @@ var utils = (function() {
     field: function(id) {
       return document.getElementById(id);
     },
-    bind: function(obj, html) {
-      if (typeof obj === "object") {
-        for (var key in obj) {
+    modelbind: function(obj, model, html) {
+      if (typeof model === "object") {
+        for (var key in model) {
           var index = html.indexOf('{{' + key + '}}')
           if (index !== -1) {
-            html = html.replace('{{' + key + '}}', obj[key]);
+            html = html.replace(new RegExp('{{' + key + '}}', 'g'), model[key]);
           }
         }
       }
+      var reg = new RegExp(/\[[a-zA-Z0-9]*\]="[a-zA-Z0-9]*\([a-zA-Z0-9]*\)"/, 'g');
+      var matches = html.match(reg);
+      for (var match of matches) {
+
+      }
       return html;
+    },
+    on: function(who, event, callback) {
+      if (who === 'array') {
+        for (var element of who) {
+          element.addEventListener('on' + event, callback);
+        }
+      } else {
+        who.addEventListener(event, function() {
+          callback();
+        });
+      }
+    },
+    getHost: function(name, returnall = false) {
+      var element = document.getElementById(name);
+      if (!element)
+        element = document.getElementsByTagName(name)
+      if (!element)
+        element = document.getElementsByClassName(name);
+      if (!element)
+        element = document.getElementsByTagNameNS(name);
+      if (typeof (element) === 'array' && !returnall) {
+        element = element[0];
+      }
+      return element;
     },
     isvalid: function() {
       if (localStorage.getItem('token')) {
@@ -51,8 +80,9 @@ var utils = (function() {
       if (who && target) {
         var element = document.getElementById(who);
         var targetElement = document.getElementById(target);
-        targetElement.appendChild(element);
+        if (element && targetElement)
+          targetElement.appendChild(element);
       }
     }
-  }
+  } 
 }());

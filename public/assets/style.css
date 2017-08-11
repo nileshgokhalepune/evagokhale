@@ -32,6 +32,24 @@
     flex-flow: row;
 }
 
+#modal{
+    background-color: silver;
+    opacity: 2;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100vw;
+    height: 100vh;
+    align-content: center;
+}
+
+.hide{
+    visibility: hidden;
+}
+
+.show{
+    visibility: visible;
+}
 [type="member"] {
     width: 100px;
     height:100px;

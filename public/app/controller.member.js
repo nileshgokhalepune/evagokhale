@@ -1,5 +1,6 @@
 controllers.member = (function() {
   function member(config, userId, userData) {
+    this.host = null;
     this.userId = userId;
     if (userData) {
       this.userData = userData;
@@ -12,18 +13,19 @@ controllers.member = (function() {
     this.relations = [];
   }
   member.prototype.init = function() {
+    var _this = this;
     return new Promise((resolve, reject) => {
       var action;
-      if (!this.userData) {
-        action = this.http.get('/user/' + this.userId);
+      if (!_this.userData) {
+        action = _this.http.get('/user/' + _this.userId);
       } else {
-        action = Promise.resolve(this.userData);
+        action = Promise.resolve(_this.userData);
       }
       action.then(data => {
-        this.userData = data;
-        this.http.get('/partials/member').then(data => {
-          this.myHtml = utils.bind(this.userData, data);
-          this.render()
+        _this.userData = data;
+        _this.http.get('/partials/member').then(data => {
+          _this.myHtml = utils.modelbind(_this, _this.userData, data);
+          _this.render();
           resolve(true);
         }).catch(error => {
           console.log(error);
