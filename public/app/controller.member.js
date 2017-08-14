@@ -1,7 +1,8 @@
 controllers.member = (function() {
-  function member(config, userId, userData) {
+  function member(config, userId, userData, familyContainer) {
     this.host = null;
     this.userId = userId;
+    this.familyContainer = familyContainer;
     if (userData) {
       this.userData = userData;
     }
@@ -12,6 +13,7 @@ controllers.member = (function() {
     this.http = config.http;
     this.relations = [];
   }
+
   member.prototype.init = function() {
     var _this = this;
     return new Promise((resolve, reject) => {
@@ -35,7 +37,6 @@ controllers.member = (function() {
         reject(error);
         console.log(error);
       });
-
     });
   }
 
@@ -44,8 +45,8 @@ controllers.member = (function() {
   }
 
   member.prototype.render = function() {
-    this.currentLocation = 'center';
-    utils.render('center', this.myHtml, true);
+    this.currentLocation = 'center' + this.userData.id;
+    utils.render('center' + this.familyContainer.id, this.myHtml, true);
   }
 
   member.prototype.position = function(where) {}

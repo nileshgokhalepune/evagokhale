@@ -37,9 +37,9 @@ var utils = (function() {
       }
       var reg = new RegExp(/\[[a-zA-Z0-9]*\]="[a-zA-Z0-9]*\([a-zA-Z0-9]*\)"/, 'g');
       var matches = html.match(reg);
-      for (var match of matches) {
+      // for (var match of matches) {
 
-      }
+      // }
       return html;
     },
     on: function(who, event, callback) {

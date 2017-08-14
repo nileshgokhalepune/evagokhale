@@ -1,6 +1,7 @@
 controllers.home = (function() {
   function home(config) {
     this.myHtml;
+    this.currentUserFamily = {};
     this.mainMember = null;
     this.utils = config.utils;
     this.http = config.http;
@@ -10,124 +11,100 @@ controllers.home = (function() {
     this.http.get('/partials/home').then(data => {
       this.myHtml = data;
       this.render();
+      this.currentUserFamily = new controllers.family(config, 1);
+      this.currentUserFamily.init().then(data => {
+        this.currentUserFamily.renderFamily();
+      })
+    }).then(d => {
     });
   }
   home.prototype.render = function() {
     this.utils.render('routes', this.myHtml);
-    this.renderCanvas();
-    this.renderUser();
   }
 
   home.prototype.renderCanvas = function() {}
 
   home.prototype.renderUser = function() {
-    var _this = this;
-    this.mainMember = new controllers.member(config, 1, null);
-    this.mainMember.init().then(data => {
-      var promises = [];
-      _this.http.get('/family/' + 1).then(data => {
-        if (data) {
-          for (var member of data) {
-            var m = new controllers.member(config, member.id, member.member);
-            promises.push(m.init());
-            this.mainMember.relations.push({
-              member: m,
-              type: member.type,
-              relation: member.relation
-            });
-          }
-          Promise.all(promises).then(d => {
-            _this.arrange();
-            // svg = new svg();
-            // for (var m of this.mainMember.relations) {
-            //   svg.drawLine(this.mainMember.userData.id, m.member.userData.id);
-            // }
-            // svg.append('routes');
-          });
-        }
-      }).catch(error => {
-        console.log(error)
-      });
-    }).catch(error => {
-      console.log(error);
-    })
-    //get other family members of this user and render them.    
 
   }
 
   home.prototype.arrange = function() {
-    for (var m of this.mainMember.relations) {
-      var strategy = placementStrategy(m.type, m.member);
-      if (strategy) strategy.move();
-    }
+
   }
 
+  home.prototype.showFamily = function(){
+    alert("showing");
+  }
   return home;
 }(config));
 
-var placementStrategy = function(type, member) {
+var placementStrategy = function(type, member, containerId) {
   switch (type) {
     case "spouse": {
       break;
     }
     case "child": {
-      return new bottomStrategy(member);
+      return new bottomStrategy(member, containerId);
     }
     case "sibling": {
-      return new leftStrategy(member);
+      return new leftStrategy(member, containerId);
     }
     case "parent": {
-      return new topStrategy(member);
+      return new topStrategy(member, containerId);
     }
     case "friend": {
-      return new rightStrategy(member);
+      return new rightStrategy(member, containerId);
     }
   }
 }
 
 var topStrategy = (function() {
-  function topStrategy(member) {
+  function topStrategy(member, containerId) {
     this.member = member;
+    this.containerId = containerId;
   }
 
   topStrategy.prototype.move = function() {
     var parents = this.member.relations.filter((m, i) => m.relation === 'parent');
-    this.member.hop('top');
+    this.member.hop('top' + this.containerId);
   }
 
   return topStrategy
 }());
 
-var leftStrategy = (function(member) {
-  function leftStrategy(member) {
+var leftStrategy = (function() {
+  function leftStrategy(member, containerId) {
     this.member = member;
+    this.containerId = containerId;
   }
   leftStrategy.prototype.move = function() {
     var siblings = this.member.relations.filter((m, i) => m.relation === 'sibling');
-    this.member.hop('left');
+    this.member.hop('left' + this.containerId);
   }
   return leftStrategy;
 }())
 
 var rightStrategy = (function() {
-  function rightStrategy(member) {
+  function rightStrategy(member, containerId) {
     this.member = member;
+    this.containerId = containerId;
   }
   rightStrategy.prototype.move = function() {
     var friends = this.member.relations.filter((m, i) => m.relation === 'friend');
-    this.member.hop('right');
+    this.member.hop('right' + this.containerId);
   }
   return rightStrategy;
 }())
 
 var bottomStrategy = (function() {
-  function bottomStrategy(member) {
+  function bottomStrategy(member, containerId) {
     this.member = member;
+    this.containerId = containerId;
   }
 
   bottomStrategy.prototype.move = function() {
     //var children = this.member.relations.filter((m, i) => m.relation === 'child');
-    this.member.hop('bottom');
+    this.member.hop('bottom' + this.containerId);
   }
 
   return bottomStrategy;

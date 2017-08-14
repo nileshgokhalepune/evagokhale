@@ -58,7 +58,7 @@ router.get('/family/:userId', function(req, res, next) {
 router.get('/image/:userId/:id', function(req, res, next) {
   if (req.params.userId && req.params.id) {
     var defaultPath = '/assets/missing.gif'
-    var finalPath = path.join(__dirname, '../images/', req.params.userId + '/' + req.params.id); 
+    var finalPath = path.join(__dirname, '../images/', req.params.userId + '/' + req.params.id);
     if (!fs.existsSync(finalPath)) {
       finalPath = path.join(__dirname, '../../public/assets/missin.gif');
     }
@@ -114,6 +114,21 @@ var users = [{
       relId: 8,
       type: 'parent',
       relation: 'mother',
+    }, {
+      id: 1,
+      relId: 9,
+      relation: 'friend',
+      type: 'friend'
+    }, {
+      id: 1,
+      relId: 10,
+      relation: 'friend',
+      type: 'friend'
+    }, {
+      id: 1,
+      relId: 11,
+      relation: 'friend',
+      type: 'friend'
     }]
 },
   {
@@ -219,6 +234,12 @@ var users = [{
         relId: 5,
         relation: 'daughter',
         type: 'child'
+      },
+      {
+        id: 8,
+        relId: 12,
+        relation: 'sister',
+        type: 'sibling'
       }]
   },
   {
@@ -243,6 +264,54 @@ var users = [{
         relId: 1,
         relation: 'friend',
         type: 'friend'
+      }]
+  },
+  {
+    userName: 'Sameer',
+    id: '9',
+    imgUrl: '/image/6/1.jpg',
+    relations: [
+      {
+        id: 9,
+        relId: 1,
+        relation: 'friend',
+        type: 'friend'
+      }]
+  },
+  {
+    userName: 'Vijayan',
+    id: '10',
+    imgUrl: '/image/6/1.jpg',
+    relations: [
+      {
+        id: 10,
+        relId: 1,
+        relation: 'friend',
+        type: 'friend'
+      }]
+  },
+  {
+    userName: 'Prabhakar',
+    id: '11',
+    imgUrl: '/image/6/1.jpg',
+    relations: [
+      {
+        id: 11,
+        relId: 1,
+        relation: 'friend',
+        type: 'friend'
+      }]
+  },
+  {
+    userName: 'Varsha',
+    id: '12',
+    imgUrl: '/image/6/1.jpg',
+    relations: [
+      {
+        id: 12,
+        relId: 8,
+        relation: 'sister',
+        type: 'sibling'
       }]
   }
 ];
