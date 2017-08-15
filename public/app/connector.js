@@ -19,7 +19,7 @@ var connector = (function() {
       'background-color': 'red',
       width: '100px',
       height: '1px'
-    });
+    }).appendTo(ui('body'));
   }
 
   return connector;

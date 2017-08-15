@@ -44,7 +44,7 @@ domElement.prototype.val = function(newVal) {
 
 domElement.prototype.init = function() {
   switch (this.selector[0]) {
-    case '<':
+    case '<': {
       var matches = this.selector.match(/<([\w-]*)>/);
       if (matches === null || matches === undefined) {
         throw 'Invalid selector';
@@ -53,6 +53,11 @@ domElement.prototype.init = function() {
       var nodeName = matches[0].replace('<', '').replace('>', '');
       this.element = document.createElement(nodeName);
       break;
+    }
+    case '#': {
+      this.element = document.getElementById(this.selector.substr(1));
+      break;
+    }
     default:
       this.element = document.querySelector(this.selector);
   }
@@ -77,6 +82,7 @@ domElement.prototype.style = function(instyle) {
   }
   this.element.setAttribute('style', styleString);
 }
+
 
 ui = function(selector) {
   var el = new domElement(selector);
