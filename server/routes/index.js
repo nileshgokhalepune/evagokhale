@@ -269,7 +269,7 @@ var users = [{
   {
     userName: 'Sameer',
     id: '9',
-    imgUrl: '/image/6/1.jpg',
+    imgUrl: '/image/9/1.jpg',
     relations: [
       {
         id: 9,
@@ -281,7 +281,7 @@ var users = [{
   {
     userName: 'Vijayan',
     id: '10',
-    imgUrl: '/image/6/1.jpg',
+    imgUrl: '/image/10/1.jpg',
     relations: [
       {
         id: 10,
@@ -293,7 +293,7 @@ var users = [{
   {
     userName: 'Prabhakar',
     id: '11',
-    imgUrl: '/image/6/1.jpg',
+    imgUrl: '/image/11/1.jpg',
     relations: [
       {
         id: 11,
@@ -305,7 +305,7 @@ var users = [{
   {
     userName: 'Varsha',
     id: '12',
-    imgUrl: '/image/6/1.jpg',
+    imgUrl: '/image/12/1.jpg',
     relations: [
       {
         id: 12,
