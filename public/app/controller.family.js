@@ -44,6 +44,12 @@ controllers.family = (function() {
           }
           Promise.all(promises).then(d => {
             _this.arrange();
+            var main = utils.getHost(this.mainMember.userData.id);
+            for (var m of this.mainMember.relations) {
+              var rel = utils.getHost(m.member.userData.id);
+              var c = new connector(main, rel);
+              c.connect();
+            }
           // svg = new svg();
           // for (var m of this.mainMember.relations) {
           //   svg.drawLine(this.mainMember.userData.id, m.member.userData.id);

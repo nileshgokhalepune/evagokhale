@@ -18,21 +18,12 @@ controllers.home = (function() {
     }).then(d => {
     });
   }
+  
   home.prototype.render = function() {
     this.utils.render('routes', this.myHtml);
   }
-
-  home.prototype.renderCanvas = function() {}
-
-  home.prototype.renderUser = function() {
-
-  }
-
-  home.prototype.arrange = function() {
-
-  }
-
-  home.prototype.showFamily = function(){
+ 
+  home.prototype.showFamily = function() {
     alert("showing");
   }
   return home;

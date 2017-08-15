@@ -11,6 +11,12 @@ var connector = (function() {
     if (typeof this.target == 'string') {
       this.target = document.getElementById(this.target);
     }
+
+    var sourceRect = this.source.getBoundingClientRect();
+    var targetRect = this.target.getBoundingClientRect();
+
+    var div = ui('div');
   }
+
   return connector;
 }());
