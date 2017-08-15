@@ -15,7 +15,11 @@ var connector = (function() {
     var sourceRect = this.source.getBoundingClientRect();
     var targetRect = this.target.getBoundingClientRect();
 
-    var div = ui('div');
+    ui('<div>').style({
+      'background-color': 'red',
+      width: '100px',
+      height: '1px'
+    });
   }
 
   return connector;

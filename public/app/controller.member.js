@@ -28,7 +28,7 @@ controllers.member = (function () {
         _this.http.get('/partials/member').then(data => {
           _this.myHtml = utils.modelbind(_this, _this.userData, data);
           _this.render();
-          ui(_this.userData.id);
+          //ui(_this.userData.id);
           _this.element = utils.getHost(_this.userData.id);
           resolve(true);
         }).catch(error => {

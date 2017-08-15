@@ -2,6 +2,5 @@
 var config = {
   http: http,
   utils: utils,
-  svg: svg,
-  ui: ui
+  svg: svg
 };
