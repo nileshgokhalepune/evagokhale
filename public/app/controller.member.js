@@ -1,4 +1,4 @@
-controllers.member = (function() {
+controllers.member = (function () {
   function member(config, userId, userData, familyContainer) {
     this.host = null;
     this.userId = userId;
@@ -14,7 +14,7 @@ controllers.member = (function() {
     this.relations = [];
   }
 
-  member.prototype.init = function() {
+  member.prototype.init = function () {
     var _this = this;
     return new Promise((resolve, reject) => {
       var action;
@@ -29,7 +29,6 @@ controllers.member = (function() {
           _this.myHtml = utils.modelbind(_this, _this.userData, data);
           _this.render();
           _this.element = ui("#" + _this.userData.id);
-          _this.element = utils.getHost(_this.userData.id);
           resolve(true);
         }).catch(error => {
           console.log(error);
@@ -42,16 +41,16 @@ controllers.member = (function() {
     });
   }
 
-  member.prototype.hop = function(target) {
+  member.prototype.hop = function (target) {
     utils.move(this.userData.id, target);
   }
 
-  member.prototype.render = function() {
+  member.prototype.render = function () {
     this.currentLocation = 'center' + this.userData.id;
     utils.render('center' + this.familyContainer.id, this.myHtml, true);
   }
 
-  member.prototype.position = function(where) {}
+  member.prototype.position = function (where) { }
 
   return member;
 }(config));

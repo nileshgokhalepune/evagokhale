@@ -99,6 +99,7 @@
     border:1px solid green;
      display:inline-flex;
     flex-flow: row;  
+    margin:  0 auto 0 auto;
 }
 
 .left{

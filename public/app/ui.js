@@ -1,11 +1,11 @@
-var domElement = function(selector) {
+var domElement = function (selector) {
   this.selector = selector || null;
   this.element = null;
 }
 
 domElement.prototype.eventHandler = {
   events: [],
-  bindEvent: function(event, callback, target) {
+  bindEvent: function (event, callback, target) {
     this.unbindEvent(evetm, target);
     target.addEventListner(event, callback, false);
     this.event.push({
@@ -14,12 +14,12 @@ domElement.prototype.eventHandler = {
       target: target
     });
   },
-  findEvent: function(event) {
-    return this.events.filter(function(evt) {
+  findEvent: function (event) {
+    return this.events.filter(function (evt) {
       return (evt.type === event);
     }, event)[0];
   },
-  unbindEvent: function(event, target) {
+  unbindEvent: function (event, target) {
     var foundEvent = this.findEvent(event);
     if (foundEvent !== undefined) {
       target.removeEventListner(event, foundEvent.event, false);
@@ -30,19 +30,31 @@ domElement.prototype.eventHandler = {
   }
 }
 
-domElement.prototype.on = function(event, callback) {
+domElement.prototype.on = function (event, callback) {
   this.eventHandler.bindEvent(event, callback, this.element);
 }
 
-domElement.prototype.off = function(event) {
+domElement.prototype.off = function (event) {
   this.eventHandler.unbindEvent(event, this.element);
 }
 
-domElement.prototype.val = function(newVal) {
+domElement.prototype.val = function (newVal) {
   return (newVal !== undefined ? this.element.value = newVal : this.element.value);
 }
 
-domElement.prototype.init = function() {
+domElement.prototype.appendTo = function (uiInstanceOrElement) {
+  var parent;
+  if (typeof uiInstanceOrElement === 'object') {
+    if (uiInstanceOrElement.hasOwnProperty('element')) {
+      parent = uiInstanceOrElement;
+    }
+  } else if (typeof uiInstanceOrElement === 'string') {
+    parent = ui(uiInstanceOrElement);
+  }
+  parent.element.appendChild(this.element);
+}
+
+domElement.prototype.init = function () {
   switch (this.selector[0]) {
     case '<': {
       var matches = this.selector.match(/<([\w-]*)>/);
@@ -63,15 +75,16 @@ domElement.prototype.init = function() {
   }
 }
 
-domElement.prototype.addClass = function(classNames) {
+domElement.prototype.addClass = function (classNames) {
   var existing = this.element.getAttribute('class');
   if (existing) {
     classNames = classNames + existing;
   }
   this.element.setAttribute('class', classNames);
+  return this;
 }
 
-domElement.prototype.style = function(instyle) {
+domElement.prototype.style = function (instyle) {
   var styleString = '';
   if (typeof instyle === 'string') {
     styleString = instyle;
@@ -81,12 +94,25 @@ domElement.prototype.style = function(instyle) {
     }
   }
   this.element.setAttribute('style', styleString);
+  return this;
 }
 
+domElement.prototype.bounds = function () {
+  return this.element.getBoundingClientRect();
+}
 
-ui = function(selector) {
-  var el = new domElement(selector);
-  el.init();
+domElement.prototype.text = function(){
+  
+}
+
+ui = function (selector) {
+  var el
+  if (selector instanceof domElement) {
+    el = selector;
+  } else {
+    el = new domElement(selector);
+    el.init();
+  }
   return el;
 }
 
