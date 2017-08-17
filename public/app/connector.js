@@ -14,10 +14,10 @@ var connector = (function() {
   }
 
   connector.prototype.connect = function(source, target, uniqueId, text) {
-    this.svg.id('svg' + uniqueId);
+    this.svg.id('svg' + uniqueId); 
     var path = ui('<path>', true, 'svg').id('path' + uniqueId).attr('d', 'M0 0').attr('stroke', '#000').attr('fill', 'none').attr('stroke-width', '12px');
     path.appendTo(this.svg);
-    this.graph.connectElements(this.svg, path, source, target);
+    this.graph.connectElements(this.svg.element, path, source, target);
     // var src = ui(this.source);
     // var trg = ui(this.target)
     // var sourceRect = src.bounds();

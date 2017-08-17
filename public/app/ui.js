@@ -69,7 +69,7 @@ domElement.prototype.init = function() {
       var nodeName = matches[0].replace('<', '').replace('>', '');
       if (this.withNs) {
         this.element = document.createElementNS(this.ns, nodeName);
-        this.attr('xmlns:p', this.ns);
+      //this.attr('xmlns:p', this.ns);
       } else
         this.element = document.createElement(nodeName);
       break;
@@ -131,7 +131,7 @@ domElement.prototype.attr = function(name, value) {
   if (this.withNs) {
     if (value) {
       this.element.removeAttribute(name);
-      this.element.setAttributeNS('http://www.w3.org/2000/xmlns/', name, value);
+      this.element.setAttributeNS(null, name, value);
     }
     retval = this.element.getAttributeNS(this.ns, name);
 

@@ -10,8 +10,9 @@ svgDraw.prototype.absolute = function(x) {
   return (x < 0) ? -x : x;
 }
 
-svgDraw.prototype.drawPath = function(svg, path, startX, startY, endX, endY) {
+svgDraw.prototype.drawPath = function(svgin, path, startX, startY, endX, endY) {
   // get the path's stroke width (if one wanted to be  really precize, one could use half the stroke size)
+  var svg = $(svgin);
   var stroke = parseFloat(path.attr("stroke-width"));
   // check if the svg is big enough to draw the path, if not, set heigh/width
   if (svg.attr("height") < endY) svg.attr("height", endY);
@@ -44,7 +45,7 @@ svgDraw.prototype.drawPath = function(svg, path, startX, startY, endX, endY) {
 
 svgDraw.prototype.connectElements = function(svg, path, startElem, endElem) {
   var svgContainer = $("#svgContainer");
-
+  
   // if first element is lower than the second, swap!
   if (startElem.offset().top > endElem.offset().top) {
     var temp = startElem;
