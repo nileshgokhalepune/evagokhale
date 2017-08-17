@@ -1,11 +1,14 @@
-var domElement = function (selector) {
+var domElement = function(selector, withNs, svgOrXhtml) {
   this.selector = selector || null;
   this.element = null;
+  this.withNs = withNs || false;
+  this.svgOrXhtml = svgOrXhtml;
+  this.ns = this.svgOrXhtml === 'svg' ? 'http://www.w3.org/2000/svg' : 'http://www.w3.org/1999/xhtml';
 }
 
 domElement.prototype.eventHandler = {
   events: [],
-  bindEvent: function (event, callback, target) {
+  bindEvent: function(event, callback, target) {
     this.unbindEvent(evetm, target);
     target.addEventListner(event, callback, false);
     this.event.push({
@@ -14,12 +17,12 @@ domElement.prototype.eventHandler = {
       target: target
     });
   },
-  findEvent: function (event) {
-    return this.events.filter(function (evt) {
+  findEvent: function(event) {
+    return this.events.filter(function(evt) {
       return (evt.type === event);
     }, event)[0];
   },
-  unbindEvent: function (event, target) {
+  unbindEvent: function(event, target) {
     var foundEvent = this.findEvent(event);
     if (foundEvent !== undefined) {
       target.removeEventListner(event, foundEvent.event, false);
@@ -30,19 +33,19 @@ domElement.prototype.eventHandler = {
   }
 }
 
-domElement.prototype.on = function (event, callback) {
+domElement.prototype.on = function(event, callback) {
   this.eventHandler.bindEvent(event, callback, this.element);
 }
 
-domElement.prototype.off = function (event) {
+domElement.prototype.off = function(event) {
   this.eventHandler.unbindEvent(event, this.element);
 }
 
-domElement.prototype.val = function (newVal) {
+domElement.prototype.val = function(newVal) {
   return (newVal !== undefined ? this.element.value = newVal : this.element.value);
 }
 
-domElement.prototype.appendTo = function (uiInstanceOrElement) {
+domElement.prototype.appendTo = function(uiInstanceOrElement) {
   var parent;
   if (typeof uiInstanceOrElement === 'object') {
     if (uiInstanceOrElement.hasOwnProperty('element')) {
@@ -52,9 +55,10 @@ domElement.prototype.appendTo = function (uiInstanceOrElement) {
     parent = ui(uiInstanceOrElement);
   }
   parent.element.appendChild(this.element);
+  return this;
 }
 
-domElement.prototype.init = function () {
+domElement.prototype.init = function() {
   switch (this.selector[0]) {
     case '<': {
       var matches = this.selector.match(/<([\w-]*)>/);
@@ -63,7 +67,11 @@ domElement.prototype.init = function () {
         return false;
       }
       var nodeName = matches[0].replace('<', '').replace('>', '');
-      this.element = document.createElement(nodeName);
+      if (this.withNs) {
+        this.element = document.createElementNS(this.ns, nodeName);
+        this.attr('xmlns:p', this.ns);
+      } else
+        this.element = document.createElement(nodeName);
       break;
     }
     case '#': {
@@ -75,7 +83,7 @@ domElement.prototype.init = function () {
   }
 }
 
-domElement.prototype.addClass = function (classNames) {
+domElement.prototype.addClass = function(classNames) {
   var existing = this.element.getAttribute('class');
   if (existing) {
     classNames = classNames + existing;
@@ -84,7 +92,7 @@ domElement.prototype.addClass = function (classNames) {
   return this;
 }
 
-domElement.prototype.style = function (instyle) {
+domElement.prototype.style = function(instyle) {
   var styleString = '';
   if (typeof instyle === 'string') {
     styleString = instyle;
@@ -97,20 +105,69 @@ domElement.prototype.style = function (instyle) {
   return this;
 }
 
-domElement.prototype.bounds = function () {
+domElement.prototype.bounds = function() {
   return this.element.getBoundingClientRect();
 }
 
-domElement.prototype.text = function(){
-  
+domElement.prototype.id = function(id) {
+  if (id) {
+    this.element.setAttribute('id', id);
+    return this;
+  } else {
+    return this.element.getAttribute('id');
+  }
 }
 
-ui = function (selector) {
+domElement.prototype.text = function(val) {
+  if (val) {
+    var existing = this.element.innerText || '';
+    this.element.innerText = existing + val;
+  }
+  return this.element.innerText;
+}
+
+domElement.prototype.attr = function(name, value) {
+  var retVal;
+  if (this.withNs) {
+    if (value) {
+      this.element.removeAttribute(name);
+      this.element.setAttributeNS('http://www.w3.org/2000/xmlns/', name, value);
+    }
+    retval = this.element.getAttributeNS(this.ns, name);
+
+  }
+  if (value) {
+    this.element.setAttribute(name, value);
+    retval = this.element.getAttribute(name);
+  }
+  if (value)
+    return this;
+  else
+    return retval;
+}
+
+domElement.prototype.offset = function(parms) {
+  var offsets = this.element.getBoundingClientRect();
+  return {
+    top: offsets.top + window.pageYOffset,
+    left: offsets.left + window.pageXOffset
+  }
+}
+
+domElement.prototype.outerWidth = function() {
+  return this.element.offsetWidth;
+}
+
+domElement.prototype.outerHeight = function() {
+  return this.element.offsetHeight;
+}
+
+ui = function(selector, withNs, svgOrXhtml) {
   var el
   if (selector instanceof domElement) {
     el = selector;
   } else {
-    el = new domElement(selector);
+    el = new domElement(selector, withNs, svgOrXhtml);
     el.init();
   }
   return el;

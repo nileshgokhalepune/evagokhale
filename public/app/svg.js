@@ -1,45 +1,104 @@
-var svg = (function() {
-  function svg() {
-    this.id = 'base';
-    this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    this.svg.setAttribute('height', '100%');
-    this.svg.setAttribute('width', '100%');
-    this.svg.setAttribute('id', 'base');
-    document.body.appendChild(this.svg);
+var svgDraw = function(svg) {
+  this.svg = svg;
+}
+
+//helper functions, it turned out chrome doesn't support Math.sgn() 
+svgDraw.prototype.signum = function(x) {
+  return (x < 0) ? -1 : 1;
+}
+svgDraw.prototype.absolute = function(x) {
+  return (x < 0) ? -x : x;
+}
+
+svgDraw.prototype.drawPath = function(svg, path, startX, startY, endX, endY) {
+  // get the path's stroke width (if one wanted to be  really precize, one could use half the stroke size)
+  var stroke = parseFloat(path.attr("stroke-width"));
+  // check if the svg is big enough to draw the path, if not, set heigh/width
+  if (svg.attr("height") < endY) svg.attr("height", endY);
+  if (svg.attr("width") < (startX + stroke)) svg.attr("width", (startX + stroke));
+  if (svg.attr("width") < (endX + stroke)) svg.attr("width", (endX + stroke));
+
+  var deltaX = (endX - startX) * 0.15;
+  var deltaY = (endY - startY) * 0.15;
+  // for further calculations which ever is the shortest distance
+  var delta = deltaY < this.absolute(deltaX) ? deltaY : this.absolute(deltaX);
+
+  // set sweep-flag (counter/clock-wise)
+  // if start element is closer to the left edge,
+  // draw the first arc counter-clockwise, and the second one clock-wise
+  var arc1 = 0;
+  var arc2 = 1;
+  if (startX > endX) {
+    arc1 = 1;
+    arc2 = 0;
+  }
+  // draw tha pipe-like path
+  // 1. move a bit down, 2. arch,  3. move a bit to the right, 4.arch, 5. move down to the end 
+  path.attr("d", "M" + startX + " " + startY +
+    " V" + (startY + delta) +
+    " A" + delta + " " + delta + " 0 0 " + arc1 + " " + (startX + delta * this.signum(deltaX)) + " " + (startY + 2 * delta) +
+    " H" + (endX - delta * this.signum(deltaX)) +
+    " A" + delta + " " + delta + " 0 0 " + arc2 + " " + endX + " " + (startY + 3 * delta) +
+    " V" + endY);
+}
+
+svgDraw.prototype.connectElements = function(svg, path, startElem, endElem) {
+  var svgContainer = $("#svgContainer");
+
+  // if first element is lower than the second, swap!
+  if (startElem.offset().top > endElem.offset().top) {
+    var temp = startElem;
+    startElem = endElem;
+    endElem = temp;
   }
 
-  svg.prototype.append = function(who) {
-    var foreignObject = document.createElement('foreignObject');
-    foreignObject.setAttribute('x', 0);
-    foreignObject.setAttribute('y', 0);
-    foreignObject.setAttribute('width', '90vw');
-    foreignObject.setAttribute('height', '90vh');
-    var body = document.createElementNS('http://www.w3.org/1999/xhtml', 'body');
-    body.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
-    var element = document.getElementById(who);
-    body.appendChild(element);
-    foreignObject.appendChild(body);
-    this.svg.appendChild(foreignObject);
-  }
-  svg.prototype.drawLine = function(source, target) {
-    // if (source && target) {
-    //   if (!(typeof (source) === 'object') && !(typeof (target) === 'object')) {
-    //     source = document.getElementById(source);
-    //     target = document.getElementById(target);
-    //   }
-    //   var rect1 = source.getBoundingClientRect();
-    //   var rect2 = target.getBoundingClientRect();
-    //   var line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    //   var line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    //   line1.setAttribute('x1', rect1.top);
-    //   line1.setAttribute('y1', rect1.left);
-    //   line1.setAttribute('x2', rect2.bottom);
-    //   line1.setAttribute('y2', rect2.right);
-    //   line1.setAttribute('stroke', "black");
-    //   this.svg.appendChild(line1);
-    //   this.svg.appendChild(line2);
-    // }
-  }
+  // get (top, left) corner coordinates of the svg container   
+  var svgTop = svgContainer.offset().top;
+  var svgLeft = svgContainer.offset().left;
 
-  return svg;
-}())
+  // get (top, left) coordinates for the two elements
+  var startCoord = startElem.offset();
+  var endCoord = endElem.offset();
+
+  // calculate path's start (x,y)  coords
+  // we want the x coordinate to visually result in the element's mid point
+  var startX = startCoord.left + 0.5 * startElem.outerWidth() - svgLeft; // x = left offset + 0.5*width - svg's left offset
+  var startY = startCoord.top + startElem.outerHeight() - svgTop; // y = top offset + height - svg's top offset
+
+  // calculate path's end (x,y) coords
+  var endX = endCoord.left + 0.5 * endElem.outerWidth() - svgLeft;
+  var endY = endCoord.top - svgTop;
+
+  // call function for drawing the path
+  this.drawPath(svg, path, startX, startY, endX, endY);
+
+}
+
+graph = function(svg) {
+  return new svgDraw();
+}
+
+// function connectAll() {
+//   // connect all the paths you want!
+//   connectElements($("#svg1"), $("#path1"), $("#teal"), $("#orange"));
+//   connectElements($("#svg1"), $("#path2"), $("#red"), $("#orange"));
+//   connectElements($("#svg1"), $("#path3"), $("#teal"), $("#aqua"));
+//   connectElements($("#svg1"), $("#path4"), $("#red"), $("#aqua"));
+//   connectElements($("#svg1"), $("#path5"), $("#purple"), $("#teal"));
+//   connectElements($("#svg1"), $("#path6"), $("#orange"), $("#green"));
+
+// }
+
+// $(document).ready(function() {
+//   // reset svg each time 
+//   $("#svg1").attr("height", "0");
+//   $("#svg1").attr("width", "0");
+//   connectAll();
+// });
+
+// $(window).resize(function() {
+//   // reset svg each time 
+//   $("#svg1").attr("height", "0");
+//   $("#svg1").attr("width", "0");
+//   connectAll();
+// });
