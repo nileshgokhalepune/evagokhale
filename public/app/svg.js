@@ -36,11 +36,11 @@ svgDraw.prototype.drawPath = function (svg, path, startX, startY, endX, endY) {
   // draw tha pipe-like path
   // 1. move a bit down, 2. arch,  3. move a bit to the right, 4.arch, 5. move down to the end 
   path.attr("d", "M" + startX + " " + startY +
-    " V" + (startY + delta) +
-    " A" + delta + " " + delta + " 0 0 " + arc1 + " " + (startX + delta * this.signum(deltaX)) + " " + (startY + 2 * delta) +
-    " H" + (endX - delta * this.signum(deltaX)) +
-    " A" + delta + " " + delta + " 0 0 " + arc2 + " " + endX + " " + (startY + 3 * delta) +
-    " V" + endY);
+    " V " + (startY + delta) +
+    " A " + delta + " " + delta + " 0 0 " + arc1 + " " + (startX + delta * this.signum(deltaX)) + " " + (startY + 2 * delta) +
+    " H " + (endX - delta * this.signum(deltaX)) +
+    " A " + delta + " " + delta + " 0 0 " + arc2 + " " + endX + " " + (startY + 3 * delta) +
+    " V " + endY);
 }
 
 svgDraw.prototype.connectElements = function (container, svg, path, startElem, endElem) {

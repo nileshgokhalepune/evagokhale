@@ -69,6 +69,7 @@ domElement.prototype.init = function() {
       var nodeName = matches[0].replace('<', '').replace('>', '');
       if (this.withNs) {
         this.element = document.createElementNS(this.ns, nodeName);
+        this.element.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
       } else
         this.element = document.createElement(nodeName);
       break;
@@ -172,6 +173,13 @@ domElement.prototype.append = function(what) {
   }
   this.element.appendChild(child);
   return this;
+}
+
+domElement.prototype.randomPos = function() {
+  var pos = (Math.random() * window.outerWidth - this.element.style.width);
+  ui(this).css({
+    left: pos + 'px'
+  })
 }
 
 ui = function(selector, withNs, svgOrXhtml) {
