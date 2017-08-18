@@ -1,4 +1,4 @@
-var domElement = function(selector, withNs, svgOrXhtml) {
+var domElement = function (selector, withNs, svgOrXhtml) {
   this.selector = selector || null;
   this.element = null;
   this.withNs = withNs || false;
@@ -8,7 +8,7 @@ var domElement = function(selector, withNs, svgOrXhtml) {
 
 domElement.prototype.eventHandler = {
   events: [],
-  bindEvent: function(event, callback, target) {
+  bindEvent: function (event, callback, target) {
     this.unbindEvent(evetm, target);
     target.addEventListner(event, callback, false);
     this.event.push({
@@ -17,12 +17,12 @@ domElement.prototype.eventHandler = {
       target: target
     });
   },
-  findEvent: function(event) {
-    return this.events.filter(function(evt) {
+  findEvent: function (event) {
+    return this.events.filter(function (evt) {
       return (evt.type === event);
     }, event)[0];
   },
-  unbindEvent: function(event, target) {
+  unbindEvent: function (event, target) {
     var foundEvent = this.findEvent(event);
     if (foundEvent !== undefined) {
       target.removeEventListner(event, foundEvent.event, false);
@@ -33,19 +33,19 @@ domElement.prototype.eventHandler = {
   }
 }
 
-domElement.prototype.on = function(event, callback) {
+domElement.prototype.on = function (event, callback) {
   this.eventHandler.bindEvent(event, callback, this.element);
 }
 
-domElement.prototype.off = function(event) {
+domElement.prototype.off = function (event) {
   this.eventHandler.unbindEvent(event, this.element);
 }
 
-domElement.prototype.val = function(newVal) {
+domElement.prototype.val = function (newVal) {
   return (newVal !== undefined ? this.element.value = newVal : this.element.value);
 }
 
-domElement.prototype.appendTo = function(uiInstanceOrElement) {
+domElement.prototype.appendTo = function (uiInstanceOrElement) {
   var parent;
   if (typeof uiInstanceOrElement === 'object') {
     if (uiInstanceOrElement.hasOwnProperty('element')) {
@@ -58,7 +58,7 @@ domElement.prototype.appendTo = function(uiInstanceOrElement) {
   return this;
 }
 
-domElement.prototype.init = function() {
+domElement.prototype.init = function () {
   switch (this.selector[0]) {
     case '<': {
       var matches = this.selector.match(/<([\w-]*)>/);
@@ -69,7 +69,6 @@ domElement.prototype.init = function() {
       var nodeName = matches[0].replace('<', '').replace('>', '');
       if (this.withNs) {
         this.element = document.createElementNS(this.ns, nodeName);
-      //this.attr('xmlns:p', this.ns);
       } else
         this.element = document.createElement(nodeName);
       break;
@@ -83,7 +82,7 @@ domElement.prototype.init = function() {
   }
 }
 
-domElement.prototype.addClass = function(classNames) {
+domElement.prototype.addClass = function (classNames) {
   var existing = this.element.getAttribute('class');
   if (existing) {
     classNames = classNames + existing;
@@ -92,7 +91,7 @@ domElement.prototype.addClass = function(classNames) {
   return this;
 }
 
-domElement.prototype.style = function(instyle) {
+domElement.prototype.style = function (instyle) {
   var styleString = '';
   if (typeof instyle === 'string') {
     styleString = instyle;
@@ -101,24 +100,24 @@ domElement.prototype.style = function(instyle) {
       styleString += style + ':' + instyle[style] + ';';
     }
   }
-  this.element.setAttribute('style', styleString);
+  this.attr('style', styleString);
   return this;
 }
 
-domElement.prototype.bounds = function() {
+domElement.prototype.bounds = function () {
   return this.element.getBoundingClientRect();
 }
 
-domElement.prototype.id = function(id) {
+domElement.prototype.id = function (id) {
   if (id) {
-    this.element.setAttribute('id', id);
+    this.attr('id', id);
     return this;
   } else {
-    return this.element.getAttribute('id');
+    return this.attr('id');
   }
 }
 
-domElement.prototype.text = function(val) {
+domElement.prototype.text = function (val) {
   if (val) {
     var existing = this.element.innerText || '';
     this.element.innerText = existing + val;
@@ -126,12 +125,12 @@ domElement.prototype.text = function(val) {
   return this.element.innerText;
 }
 
-domElement.prototype.attr = function(name, value) {
+domElement.prototype.attr = function (name, value) {
   var retVal;
   if (this.withNs) {
     if (value) {
       this.element.removeAttribute(name);
-      this.element.setAttributeNS(null, name, value);
+      this.element.setAttribute(name, value);
     }
     retval = this.element.getAttributeNS(this.ns, name);
 
@@ -146,7 +145,7 @@ domElement.prototype.attr = function(name, value) {
     return retval;
 }
 
-domElement.prototype.offset = function(parms) {
+domElement.prototype.offset = function (parms) {
   var offsets = this.element.getBoundingClientRect();
   return {
     top: offsets.top + window.pageYOffset,
@@ -154,15 +153,15 @@ domElement.prototype.offset = function(parms) {
   }
 }
 
-domElement.prototype.outerWidth = function() {
+domElement.prototype.outerWidth = function () {
   return this.element.offsetWidth;
 }
 
-domElement.prototype.outerHeight = function() {
+domElement.prototype.outerHeight = function () {
   return this.element.offsetHeight;
 }
 
-ui = function(selector, withNs, svgOrXhtml) {
+ui = function (selector, withNs, svgOrXhtml) {
   var el
   if (selector instanceof domElement) {
     el = selector;
