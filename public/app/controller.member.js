@@ -46,8 +46,8 @@ controllers.member = (function () {
   }
 
   member.prototype.render = function () {
-    this.currentLocation = 'center' + this.userData.id;
-    utils.render('center' + this.familyContainer.id, this.myHtml, true);
+    this.currentLocation = this.familyContainer.elementId //'center' + this.userData.id;
+    utils.render(this.familyContainer.elementId , this.myHtml, true);
   }
 
   member.prototype.position = function (where) { }

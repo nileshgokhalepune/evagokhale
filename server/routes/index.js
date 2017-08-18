@@ -39,7 +39,7 @@ router.get('/family/:userId', function(req, res, next) {
   var user = users.find((e, i) => e.id == req.params.userId);
   if (user) {
     var family = [];
-    for (var r of user.relations) {
+    for (var r of user.relations.sort(s => s.order)) {
       var member = users.find((e, i) => e.id == r.relId);
       if (member) {
         family.push({
@@ -87,48 +87,57 @@ var users = [{
       id: 1,
       relId: 3,
       relation: 'daughter',
-      type: 'child'
+      type: 'child',
+      order: 2
     },
     {
       id: 1,
       relId: 4,
       relation: 'son',
-      type: 'child'
+      type: 'child',
+      order: 2
     }, {
       id: 1,
       relId: 5,
       type: 'sibling',
       relation: 'sister',
+      order: 4
     }, {
       id: 1,
       relId: 6,
       type: 'friend',
       relation: 'friend',
+      order: 5
     }, {
       id: 1,
       relId: 7,
       type: 'parent',
       relation: 'father',
+      order: 3
     }, {
       id: 1,
       relId: 8,
       type: 'parent',
       relation: 'mother',
+      order: 3
     }, {
       id: 1,
       relId: 9,
       relation: 'friend',
-      type: 'friend'
+      type: 'friend',
+      order: 5
     }, {
       id: 1,
       relId: 10,
       relation: 'friend',
-      type: 'friend'
+      type: 'friend',
+      order: 5
     }, {
       id: 1,
       relId: 11,
       relation: 'friend',
-      type: 'friend'
+      type: 'friend',
+      order: 5
     }]
 },
   {

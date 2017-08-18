@@ -44,7 +44,7 @@ controllers.family = (function () {
           }
           Promise.all(promises).then(d => {
             //_this.arrange();
-            var main = ui("#" + this.mainMember.userData.id);
+            var main = ui("#" + this.mainMember.userData.id).center();
             var container = ui("#family" + this.id);
             var svg = ui('#svg' + this.id);
             var containerDiv = ui('#containerDiv' + this.id);

@@ -176,10 +176,25 @@ domElement.prototype.append = function(what) {
 }
 
 domElement.prototype.randomPos = function() {
-  var pos = (Math.random() * window.outerWidth - this.element.style.width);
-  ui(this).css({
-    left: pos + 'px'
-  })
+  var posx = (Math.random() * window.innerWidth - this.element.offsetWidth);
+  var posy = (Math.random() * window.innerHeight - this.element.offsetHeight);
+  ui(this).style({
+    left: posx + 'px',
+    top: posy + 'px',
+    position: 'absolute'
+  });
+  return this;
+}
+
+domElement.prototype.center = function() {
+  var posx = ((window.innerWidth / 2) - this.element.offsetWidth);
+  var posy = ((window.innerHeight / 2) - this.element.offsetHeight);
+  this.style({
+    left: posx + 'px',
+    top: posy + 'px',
+    position: 'absolute'
+  });
+  return this;
 }
 
 ui = function(selector, withNs, svgOrXhtml) {
