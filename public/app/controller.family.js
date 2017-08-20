@@ -43,14 +43,17 @@ controllers.family = (function () {
             });
           }
           Promise.all(promises).then(d => {
-            //_this.arrange();
+            _this.arrange();
             var main = ui("#" + this.mainMember.userData.id).center();
             var container = ui("#family" + this.id);
             var svg = ui('#svg' + this.id);
             var containerDiv = ui('#containerDiv' + this.id);
             var c = new connector(container, svg, containerDiv);
             for (var m of this.mainMember.relations) {
-              var rel = ui("#" + m.member.userData.id).randomPos();
+              var rel = ui("#" + m.member.userData.id);
+              if(m.relation === 'spouse'){
+                
+              }
               c.connect(main, rel, m.member.userData.id, this.mainMember.userData.userName + ' - is ' + m.relation + ' of ' + m.member.userData.userName);
               // c.connect();
             }

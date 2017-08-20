@@ -125,8 +125,9 @@
     display: block;
     flex-direction: column;
     position: absolute;  
-    margin: auto 1.5em;
+    margin: auto 0 auto 0;
     padding: 20px;
+    float: left;
 }
 
 .bottom{
