@@ -51,9 +51,6 @@ controllers.family = (function () {
             var c = new connector(container, svg, containerDiv);
             for (var m of this.mainMember.relations) {
               var rel = ui("#" + m.member.userData.id);
-              if(m.relation === 'spouse'){
-                
-              }
               c.connect(main, rel, m.member.userData.id, this.mainMember.userData.userName + ' - is ' + m.relation + ' of ' + m.member.userData.userName);
               // c.connect();
             }
