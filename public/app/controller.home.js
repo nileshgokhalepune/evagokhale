@@ -61,10 +61,12 @@ var centerStrategy = (function () {
   }
 
   centerStrategy.prototype.move = function () {
-    var spouse = this.member.relation.filter((m, i) => m.relation === 'spouse');
-    this.member.hop('center', this.containerId);
+    var spouse = this.member.relations.filter((m, i) => m.relation === 'spouse');
+    this.member.hop('center' + this.containerId);
   }
-});
+
+  return centerStrategy;
+}());
 
 var topStrategy = (function () {
   function topStrategy(member, containerId) {
@@ -111,7 +113,7 @@ var bottomStrategy = (function () {
   }
 
   bottomStrategy.prototype.move = function () {
-    //var children = this.member.relations.filter((m, i) => m.relation === 'child');
+    var children = this.member.relations.filter((m, i) => m.relation === 'child');
     this.member.hop('bottom' + this.containerId);
   }
 

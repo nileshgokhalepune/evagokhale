@@ -1,11 +1,11 @@
-controllers.family = (function () {
+controllers.family = (function() {
   function family(config, id) {
     this.http = config.http;
     this.id = id;
     this.elementId = 'family' + this.id;
   }
 
-  family.prototype.init = function () {
+  family.prototype.init = function() {
     return new Promise((resolve, reject) => {
       this.http.get('/partials/family').then(data => {
         this.myhtml = utils.modelbind(this, {
@@ -19,14 +19,14 @@ controllers.family = (function () {
     })
   }
 
-  family.prototype.arrange = function () {
+  family.prototype.arrange = function() {
     for (var m of this.mainMember.relations) {
       var strategy = placementStrategy(m.type, m.member, this.id);
       if (strategy) strategy.move();
     }
   }
 
-  family.prototype.renderFamily = function () {
+  family.prototype.renderFamily = function() {
     var _this = this;
     this.mainMember = new controllers.member(config, 1, null, _this);
     this.mainMember.init().then(data => {
@@ -43,6 +43,8 @@ controllers.family = (function () {
             });
           }
           Promise.all(promises).then(d => {
+            var moveMainMember = new centerStrategy(this.mainMember, this.id)
+            moveMainMember.move();
             _this.arrange();
             var main = ui("#" + this.mainMember.userData.id).center();
             var container = ui("#family" + this.id);
@@ -52,7 +54,6 @@ controllers.family = (function () {
             for (var m of this.mainMember.relations) {
               var rel = ui("#" + m.member.userData.id);
               c.connect(main, rel, m.member.userData.id, this.mainMember.userData.userName + ' - is ' + m.relation + ' of ' + m.member.userData.userName);
-              // c.connect();
             }
           });
         }
@@ -62,10 +63,10 @@ controllers.family = (function () {
     }).catch(error => {
       console.log(error);
     })
-    //get other family members of this user and render them.    
+  //get other family members of this user and render them.    
   }
 
-  family.prototype.render = function () {
+  family.prototype.render = function() {
     utils.render('home', this.myhtml, true);
   }
 
