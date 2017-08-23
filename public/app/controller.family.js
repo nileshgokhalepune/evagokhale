@@ -43,10 +43,10 @@ controllers.family = (function() {
             });
           }
           Promise.all(promises).then(d => {
-            var moveMainMember = new centerStrategy(this.mainMember, this.id)
+            var moveMainMember = new topStrategy(this.mainMember, this.id)
             moveMainMember.move();
             _this.arrange();
-            var main = ui("#" + this.mainMember.userData.id).center();
+            var main = ui("#" + this.mainMember.userData.id);
             var container = ui("#family" + this.id);
             var svg = ui('#svg' + this.id);
             var containerDiv = ui('#containerDiv' + this.id);
