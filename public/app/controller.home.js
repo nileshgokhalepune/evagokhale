@@ -36,7 +36,7 @@ var placementStrategy = function(type, member, containerId) {
       break;
     }
     case "child": {
-      return new centerStrategy(member, containerId);
+      return new topStrategy(member, containerId);
       break;
     }
     case "sibling": {

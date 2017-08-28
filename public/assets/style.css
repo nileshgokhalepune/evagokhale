@@ -84,7 +84,7 @@
     margin: 0 auto 0 auto;
     border:1px solid red;
     left: 25%;
-    /* visibility: collapse; */
+     visibility: collapse; 
 }
 
 .top{
@@ -95,7 +95,7 @@
     position: absolute;
     margin: 0 auto 0 auto;
     border:1px solid red;
-    /* visibility: collapse; */
+     visibility: collapse; 
 }
 
 .left{
@@ -104,7 +104,7 @@
     position: absolute;
     background-color: transparent;
     border:1px solid red;
-    /* visibility: collapse; */
+     visibility: collapse; 
 }
 
 .right{
@@ -114,7 +114,7 @@
     position: absolute;
     background-color: transparent;
     border:1px solid red;
-    /* visibility: collapse; */
+     visibility: collapse; 
 }
 
 .bottom{
@@ -123,7 +123,7 @@
     left: 25%;
     background-color: transparent;
     border:1px solid red;
-    /* visibility: collapse; */
+     visibility: collapse; 
 }
 /* 
 .top{
