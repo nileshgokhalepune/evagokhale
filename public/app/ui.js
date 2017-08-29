@@ -92,6 +92,15 @@ domElement.prototype.addClass = function(classNames) {
   return this;
 }
 
+domElement.prototype.removeClass = function(className) {
+  var existing = this.element.getAttribute('class');
+  if (existing) {
+    existing = existing.replace(className, '');
+  }
+  this.element.setAttribute('class', existing);
+  return this;
+}
+
 domElement.prototype.style = function(instyle) {
   var styleString = '';
   if (typeof instyle === 'string') {
@@ -197,6 +206,12 @@ domElement.prototype.center = function() {
   return this;
 }
 
+domElement.prototype.show = function() {
+  this.removeClass('hide');
+}
+domElement.prototype.hide = function() {
+  this.addClass('hide');
+}
 ui = function(selector, withNs, svgOrXhtml) {
   var el
   if (selector instanceof domElement) {

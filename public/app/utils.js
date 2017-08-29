@@ -35,19 +35,18 @@ var utils = (function() {
           }
         }
       }
-      var reg = new RegExp(/\[[a-zA-Z0-9]*\]="[a-zA-Z0-9]*\([a-zA-Z0-9]*\)"/, 'g');
+      var reg = new RegExp(/\[[a-zA-Z0-9]*\]="[a-zA-Z0-9\.]*\([\'\"a-zA-Z0-9\"\']*\)"/, 'g');
       var matches = html.match(reg);
       if (matches && matches.length > 0)
         matches.forEach(match => {
           var eventInfo = match.split("=");
           if (eventInfo && eventInfo.length === 2) {
-            var eventName = eventInfo[0].replace('[').replace(']');
+            var eventName = eventInfo[0].replace('[','').replace(']','');
             var method = eventInfo[1];
-            html.indexOf('<', 0, html.indexOf(match));
-            this.on()
+            var whosIndex = html.indexOf('<', 0, html.indexOf(match));
           }
-        // var eventBind = match.replace("[", "on").replace(']', "");
-        // html = html.replace(match, eventBind);
+         var eventBind = match.replace("[", "on").replace(']', "");
+         html = html.replace(match, eventBind);
         });
       // for (var match of matches) {
       //   var eventBind = match.replace("[", "on").replace(']', "");

@@ -30,7 +30,7 @@ controllers.container = (function() {
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li><button class="btn" [click]="showInviteDialog()">Invite</button></li>
+            <li><button class="btn" [click]="controllers.container.showInviteDialog()">Invite</button></li>
           </ul>
         </div>
         </nav>
@@ -41,9 +41,9 @@ controllers.container = (function() {
     this.utils.render('page-content', this.myhtml);
   },
   container.prototype.showInviteDialog = function() {
-    utils.http.get('/partials/invite').then(data => {
+    this.http.get('/partials/invite').then(data => {
       utils.render('modal', data);
-      ui('modal').addClass('show');
+      ui('#modal').show();
     //var modal = utils.getHost('modal');
     });
   }
