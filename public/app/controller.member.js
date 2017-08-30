@@ -1,4 +1,4 @@
-controllers.member = (function () {
+controllers.member = (function() {
   function member(config, userId, userData, familyContainer) {
     this.host = null;
     this.userId = userId;
@@ -14,7 +14,7 @@ controllers.member = (function () {
     this.relations = [];
   }
 
-  member.prototype.init = function () {
+  member.prototype.init = function() {
     var _this = this;
     return new Promise((resolve, reject) => {
       var action;
@@ -41,16 +41,19 @@ controllers.member = (function () {
     });
   }
 
-  member.prototype.hop = function (target) {
+  member.prototype.hop = function(target) {
     utils.move(this.userData.id, target);
   }
 
-  member.prototype.render = function () {
+  member.prototype.render = function() {
     this.currentLocation = this.familyContainer.elementId //'center' + this.userData.id;
-    utils.render(this.familyContainer.elementId , this.myHtml, true);
+    utils.render(this.familyContainer.elementId, this.myHtml, true);
   }
 
-  member.prototype.position = function (where) { }
+  member.prototype.position = function(where) {}
+
+  member.prototype.sendInvite = function() {    
+  }
 
   return member;
 }(config));

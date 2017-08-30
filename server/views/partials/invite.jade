@@ -1,8 +1,25 @@
-div(id="invite")
-    div
+div(class="container")
+    div(id="invite")
         label Name
         input(class="form-control",type="text",id="{{username}}")
         label Email
         input(class="form-control",type="email",id="{{email}}")
         div(class="row")
-        button(class="btn btn-default") Submit
+        label Relation Type
+        select(class="form-control")
+            option(value="parent") Parent
+            option(value="sibling") Sibling
+            option(value="spouse") Spouse
+            option(value="child") Child
+            option(value="friend") Friend
+        label Relation with you
+        select(class="form-control")
+            option(value="mother") Mother
+            option(value="father") Father
+            option(value="sister") Sister
+            option(value="brother") Brother
+            option(value="daughter") Daughter
+            option(value="son") Son
+            option(value="wife") Wife
+            option(value="husband") Husband
+        button(class="btn btn-default",onclick="sendInvite();") Submit

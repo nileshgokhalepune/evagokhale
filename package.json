@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "",
   "main": "./server/server.js",
-  "scripts": { 
+  "scripts": {
     "start": "node ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp"
@@ -30,15 +30,16 @@
     "debug": "^2.6.8",
     "es6-shim": "^0.35.3",
     "express": "^4.15.3",
+    "fs": "0.0.1-security",
     "googleapis": "^20.1.0",
     "jade": "^1.11.0",
+    "jsonwebtoken": "7.4.1",
     "moment": "^2.18.1",
     "mongoose": "^4.11.1",
+    "nodemailer": "^4.1.0",
     "path": "^0.12.7",
     "reflect-metadata": "^0.1.10",
     "request": "^2.81.0",
-    "systemjs": "^0.20.15",
-    "jsonwebtoken": "7.4.1",
-    "fs": "0.0.1-security"
+    "systemjs": "^0.20.15"
   }
 }
