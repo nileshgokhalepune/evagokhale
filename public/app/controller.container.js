@@ -35,7 +35,11 @@ controllers.container = (function() {
         </div>
         </nav>
         <div id="routes"></div>
-        <div id="modal" class="hide">
+        <div class="hide">
+          <div id="overlay">
+          </div>
+          <div id="modal">
+        </div>
         </div>
       `);
     this.utils.render('page-content', this.myhtml);

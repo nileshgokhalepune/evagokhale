@@ -212,6 +212,14 @@ domElement.prototype.show = function() {
 domElement.prototype.hide = function() {
   this.addClass('hide');
 }
+
+domElement.prototype.form = function() {
+  var formObject = {};
+  for (var ele in this.element.children) {
+    
+  }
+}
+
 ui = function(selector, withNs, svgOrXhtml) {
   var el
   if (selector instanceof domElement) {

@@ -76,6 +76,8 @@ router.post('/invite/:userId', function(req, res, next) {
     var transporter = mailer.createTransport({
       service: 'gmail',
       auth: {
+        user: 'nileshgokhale45@gmail.com',
+        pass: '8:F%,(+g'
       }
     });
     var mailOptons = {
