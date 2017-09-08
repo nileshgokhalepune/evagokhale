@@ -1,16 +1,7 @@
-var controllers = (function() {
-  function controllers() {
-  }
-  controllers.prototype.newup = function(what) {
-    return new this[what](config);
-  }
-  return new controllers();
-}());
-
-window.onload = function() {
-  //fireup app on load.
-  console.log(config);
-  if (controllers.container) {
-    controllers.container.init();
-  }
-}
+"use strict";
+exports.__esModule = true;
+var bootstrapper_1 = require("../core/bootstrapper");
+var app_1 = require("./app");
+var bootStrap = new bootstrapper_1.Bootstrap();
+bootStrap.bootstrap(app_1.App);
+//# sourceMappingURL=main.js.map

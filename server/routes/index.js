@@ -1,6 +1,6 @@
 var express = require('express');
 var google = require('../libraries/google');
-var googleApi = new google.googleApi();
+//var googleApi = new google.googleApi();
 var router = express.Router();
 var path = require('path');
 var moment = require('moment');
