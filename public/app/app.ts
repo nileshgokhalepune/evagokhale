@@ -1,11 +1,14 @@
+import { Home } from './home';
 import { Bit } from '../core/decorator';
 
 @Bit({
     selector: 'app',
     template: `
-        <div id="mainApp">
-        </div>
-    `,
+    <app>
+        Can you see me?
+        <outlet>
+        </outlet>
+    </app>`,
     parent: 'body'
 })
 export class App {
